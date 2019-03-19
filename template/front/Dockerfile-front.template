@@ -11,12 +11,17 @@ ENV TAIGA_GITLAB_CLIENT_ID='' \
 COPY entrypoint.sh /
 COPY conf.json /taiga/conf.json
 
-## Install Slack/Mattermost extension
-## Install GitLab Auth extension
-## Install GitHub Auth extension
-## Install Cookie Warning extension
+# Fix entrypoint permissions
+# Setup symbolic links for configuration files
+# Install Slack/Mattermost extension
+# Install GitLab Auth extension
+# Install GitHub Auth extension
+# Install Cookie Warning extension
 RUN set -ex; \
     chmod 755 /entrypoint.sh; \
+    ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json; \
+    mkdir -p /usr/src/taiga-front-dist/dist/js/; \
+    ln -s /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json; \
     SLACK_VERSION=$(curl -s https://pypi.org/pypi/taiga-contrib-slack/json \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
