@@ -1,0 +1,35 @@
+dist: trusty
+sudo: required
+
+services: docker
+
+language: bash
+
+branches:
+  only:
+    - master
+
+before_script:
+  - env | sort
+  - dir="images/${VERSION}/${VARIANT}"
+
+script:
+  - cd "$dir"
+  - docker-compose up -d
+  - docker-compose ps
+  - docker-compose logs
+
+notifications:
+  email: false
+
+env: # Environments
+    - VERSION=3.3 VARIANT=alpine
+    - VERSION=3.3 VARIANT=alpine
+    - VERSION=3.4 VARIANT=alpine
+    - VERSION=3.4 VARIANT=alpine
+    - VERSION=4.0 VARIANT=alpine
+    - VERSION=4.0 VARIANT=alpine
+    - VERSION=4.1 VARIANT=alpine
+    - VERSION=4.1 VARIANT=alpine
+    - VERSION=4.2 VARIANT=alpine
+    - VERSION=4.2 VARIANT=alpine
