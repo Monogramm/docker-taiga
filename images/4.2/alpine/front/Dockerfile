@@ -20,12 +20,6 @@ COPY custom.conf.json /taiga/
 # Install Cookie Warning extension
 RUN set -ex; \
     chmod 755 /entrypoint.sh; \
-    rm -f /taiga/conf.json; \
-    mv /taiga/custom.conf.json /taiga/conf.json; \
-    chmod 644 /taiga/conf.json; \
-    ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json; \
-    mkdir -p /usr/src/taiga-front-dist/dist/js/; \
-    ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json; \
     SLACK_VERSION=$(curl -s https://pypi.org/pypi/taiga-contrib-slack/json \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
