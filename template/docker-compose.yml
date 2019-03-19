@@ -1,4 +1,6 @@
+version: '2'
 
+services:
   # Taiga service
   taigadb:
     image: postgres:10-alpine
