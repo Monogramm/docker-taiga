@@ -9,9 +9,10 @@ ENV TAIGA_GITLAB_CLIENT_ID='' \
 
 # Erase original entrypoint and conf with custom one
 COPY entrypoint.sh /
-COPY conf.json /taiga/
+COPY custom.conf.json /taiga/
 
 # Fix entrypoint permissions
+# Replace original configuration file
 # Setup symbolic links for configuration files
 # Install Slack/Mattermost extension
 # Install GitLab Auth extension
@@ -19,6 +20,8 @@ COPY conf.json /taiga/
 # Install Cookie Warning extension
 RUN set -ex; \
     chmod 755 /entrypoint.sh; \
+    rm -f /taiga/conf.json; \
+    mv /taiga/custom.conf.json /taiga/conf.json; \
     ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json; \
     mkdir -p /usr/src/taiga-front-dist/dist/js/; \
     ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json; \
