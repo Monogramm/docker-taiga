@@ -22,6 +22,7 @@ RUN set -ex; \
     chmod 755 /entrypoint.sh; \
     rm -f /taiga/conf.json; \
     mv /taiga/custom.conf.json /taiga/conf.json; \
+    chmod 644 /taiga/conf.json; \
     ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/conf.json; \
     mkdir -p /usr/src/taiga-front-dist/dist/js/; \
     ln -fs /taiga/conf.json /usr/src/taiga-front-dist/dist/js/conf.json; \
