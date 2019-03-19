@@ -1,8 +1,6 @@
 #!/bin/sh
 
-echo "Taiga frontend startup..."
-
-if [ ! -e /taiga/conf.json ]; then
+if [ ! -f /taiga/conf.json ]; then
   echo "Taiga frontend configuration missing!"
   exit 1
 fi

@@ -20,7 +20,6 @@ COPY conf.json /taiga/
 # Install Cookie Warning extension
 RUN set -ex; \
     chmod 755 /entrypoint.sh; \
-    ls -l /taiga/; \
     SLACK_VERSION=$(curl -s https://pypi.org/pypi/taiga-contrib-slack/json \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
