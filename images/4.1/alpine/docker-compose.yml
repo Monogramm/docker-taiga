@@ -27,8 +27,8 @@ services:
     volumes:
       # Media and uploads directory. Required (or you will lose all uploads)
       - /srv/taiga/back/media:/usr/src/taiga-back/media
-      # Taiga configuration directory. Makes it easier to change configuration.
-      - /srv/taiga/back/conf:/taiga
+      # Taiga configuration directory. Makes it easier to change configuration with your own
+      #- /srv/taiga/back/conf:/taiga
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     environment:
@@ -99,8 +99,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      # Taiga configuration directory. Makes it easier to change configuration.
-      - /srv/taiga/front/conf:/taiga
+      # Taiga configuration directory. Makes it easier to change configuration with your own
+      #- /srv/taiga/front/conf:/taiga
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
     environment:

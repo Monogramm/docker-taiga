@@ -1,5 +1,10 @@
 #!/bin/sh
 
+if [ ! -f /taiga/conf.json ]; then
+  echo "Taiga frontend configuration missing!"
+  exit 1
+fi
+
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
 sed -i "s|TAIGA_HOSTNAME|$TAIGA_HOSTNAME|g" /taiga/conf.json
 

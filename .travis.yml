@@ -15,6 +15,7 @@ before_script:
 
 script:
   - cd "$dir"
+  - travis_retry docker-compose build
   - docker-compose up -d
   - docker-compose ps
   - docker-compose logs
