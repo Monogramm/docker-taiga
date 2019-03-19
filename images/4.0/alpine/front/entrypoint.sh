@@ -2,13 +2,7 @@
 
 echo "Taiga frontend startup..."
 
-if [ -f /taiga/custom.conf.json ]; then
-  echo "Taiga frontend custom configuration will overwrite default one"
-  rm -f /taiga/conf.json
-  mv /taiga/custom.conf.json /taiga/conf.json
-fi
-
-if [ ! -f /taiga/conf.json ]; then
+if [ ! -e /taiga/conf.json ]; then
   echo "Taiga frontend configuration missing!"
   exit 1
 fi

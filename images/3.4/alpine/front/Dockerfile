@@ -9,7 +9,7 @@ ENV TAIGA_GITLAB_CLIENT_ID='' \
 
 # Erase original entrypoint and conf with custom one
 COPY entrypoint.sh /
-COPY custom.conf.json /taiga/
+COPY conf.json /taiga/
 
 # Fix entrypoint permissions
 # Replace original configuration file
