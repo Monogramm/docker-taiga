@@ -4,9 +4,9 @@ LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
 # Taiga additional properties
 ENV TAIGA_ENABLE_SLACK=False \
-	TAIGA_ENABLE_GITLAB=False \
-	TAIGA_GITLAB_URL=https://gitlab.com \
-	TAIGA_GITLAB_CLIENT_ID='' \
+    TAIGA_ENABLE_GITLAB=False \
+    TAIGA_GITLAB_URL=https://gitlab.com \
+    TAIGA_GITLAB_CLIENT_ID='' \
     TAIGA_GITLAB_CLIENT_SECRET='' \
     TAIGA_ENABLE_GITHUB=False \
     TAIGA_GITHUB_CLIENT_ID='' \
