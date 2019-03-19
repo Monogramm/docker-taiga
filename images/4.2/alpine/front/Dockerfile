@@ -16,6 +16,7 @@ COPY conf.json /taiga/conf.json
 ## Install GitHub Auth extension
 ## Install Cookie Warning extension
 RUN set -ex; \
+    chmod 755 /entrypoint.sh; \
     SLACK_VERSION=$(curl -s https://pypi.org/pypi/taiga-contrib-slack/json \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \

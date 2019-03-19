@@ -31,6 +31,7 @@ COPY local.py /taiga/local.py
 ## Install GitLab Auth extension
 ## Install LDAP extension
 RUN set -ex; \
+    chmod 755 /entrypoint.sh; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-slack; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-gitlab-auth-official; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-ldap-auth-ext
