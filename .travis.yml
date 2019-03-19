@@ -24,12 +24,7 @@ notifications:
 
 env: # Environments
     - VERSION=3.3 VARIANT=alpine
-    - VERSION=3.3 VARIANT=alpine
-    - VERSION=3.4 VARIANT=alpine
     - VERSION=3.4 VARIANT=alpine
     - VERSION=4.0 VARIANT=alpine
-    - VERSION=4.0 VARIANT=alpine
     - VERSION=4.1 VARIANT=alpine
-    - VERSION=4.1 VARIANT=alpine
-    - VERSION=4.2 VARIANT=alpine
     - VERSION=4.2 VARIANT=alpine

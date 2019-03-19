@@ -64,8 +64,6 @@ for latest in "${latests[@]}"; do
                 # Copy the configuration (if any)
                 cp $src/*.py $src/*.json "$tgt/" 2>/dev/null || :
 
-                travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
-
                 if [[ $1 == 'build' ]]; then
                     tag="$version-$variant"
                     echo "Build Dockerfile for ${tag}"
@@ -81,6 +79,8 @@ for latest in "${latests[@]}"; do
                 s/%%VARIANT%%/'"$variant"'/g;
                 s/%%VERSION%%/'"$version"'/g;
             ' "$dir/docker-compose.yml"
+
+            travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
 
         done
 
