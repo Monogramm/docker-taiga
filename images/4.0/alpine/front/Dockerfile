@@ -29,9 +29,8 @@ RUN set -ex; \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
     echo "taiga-contrib-gitlab-auth-official version: \"$GITLAB_AUTH_VERSION\""; \
-    curl -sOL https://github.com/taigaio/taiga-contrib-gitlab-auth/archive/$GITLAB_AUTH_VERSION.tar.gz \
-        -o /tmp/$GITLAB_AUTH_VERSION.tar.gz; \
-    tar xzf /tmp/$GITLAB_AUTH_VERSION.tar.gz -C /tmp; \
+    curl -L https://github.com/taigaio/taiga-contrib-gitlab-auth/archive/$GITLAB_AUTH_VERSION.tar.gz \
+        | tar zx -C /tmp; \
     rm -f /tmp/$GITLAB_AUTH_VERSION.tar.gz; \
     mv /tmp/taiga-contrib-gitlab-auth-$GITLAB_AUTH_VERSION/front/dist \
         /usr/src/taiga-front-dist/dist/plugins/gitlab-auth; \
@@ -40,18 +39,16 @@ RUN set -ex; \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
     echo "taiga-contrib-github-auth version: \"$GITHUB_AUTH_VERSION\""; \
-    curl -sOL https://github.com/taigaio/taiga-contrib-github-auth/archive/$GITHUB_AUTH_VERSION.tar.gz \
-        -o /tmp/$GITHUB_AUTH_VERSION.tar.gz; \
-    tar xzf /tmp/$GITHUB_AUTH_VERSION.tar.gz -C /tmp; \
+    curl -L https://github.com/taigaio/taiga-contrib-github-auth/archive/$GITHUB_AUTH_VERSION.tar.gz \
+        | tar zx -C /tmp; \
     rm -f /tmp/$GITHUB_AUTH_VERSION.tar.gz; \
     mv /tmp/taiga-contrib-github-auth-$GITHUB_AUTH_VERSION/front/dist \
         /usr/src/taiga-front-dist/dist/plugins/github-auth; \
     rm -rf /tmp/taiga-contrib-github-auth-$GITHUB_AUTH_VERSION; \
     COOKIE_WARNING_VERSION=stable; \
     echo "taiga-contrib-cookie-warning version: \"$COOKIE_WARNING_VERSION\""; \
-    curl -sOL https://github.com/taigaio/taiga-contrib-cookie-warning/archive/$COOKIE_WARNING_VERSION.tar.gz \
-        -o /tmp/$COOKIE_WARNING_VERSION.tar.gz; \
-    tar xzf /tmp/$COOKIE_WARNING_VERSION.tar.gz -C /tmp; \
+    curl -L https://github.com/taigaio/taiga-contrib-cookie-warning/archive/$COOKIE_WARNING_VERSION.tar.gz \
+        | tar zx -C /tmp; \
     rm -f /tmp/$COOKIE_WARNING_VERSION.tar.gz; \
     mv /tmp/taiga-contrib-cookie-warning-$COOKIE_WARNING_VERSION/dist \
         /usr/src/taiga-front-dist/dist/plugins/cookie-warning; \
