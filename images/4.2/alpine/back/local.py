@@ -9,7 +9,8 @@
 # https://github.com/taigaio/taiga-back/blob/master/settings/common.py
 
 from .docker import *
-
+from ldap3 import Tls
+import ssl
 
 #########################################
 ## SLACK
