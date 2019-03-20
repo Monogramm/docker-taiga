@@ -147,6 +147,11 @@ services:
   #   image: rabbitmq:3-alpine
   #   hostname: taiga_rabbit
   #   container_name: taiga_rabbit
+  #   ports:
+  #     - 5672:5672
+  #   environment:
+  #     - RABBITMQ_DEFAULT_USER=${TAIGA_RABBIT_USER}
+  #     - RABBITMQ_DEFAULT_PASS=${TAIGA_RABBIT_PASSWORD}
   # 
   # taiga_redis:
   #   image: redis:4.0-alpine
@@ -166,6 +171,13 @@ services:
   #     - taiga_rabbit
   # 
   # taiga_events:
-  #   image: monogramm/docker-taiga-events
+  #   image: monogramm/docker-taiga-events:alpine
   #   links:
   #     - taiga_rabbit
+  #   environment:
+  #     - RABBIT_USER=${TAIGA_RABBIT_USER}
+  #     - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+  #     - RABBIT_HOST=taiga_rabbit
+  #     - RABBIT_PORT=5672
+  #     - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
+  #     - TAIGA_EVENTS_PORT=8888
