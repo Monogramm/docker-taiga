@@ -227,26 +227,31 @@ fi
 #########################################
 
 # Reinitialize nginx links
-rm /etc/nginx/sites-enabled/*
+if [ -d /etc/nginx/sites-enabled/ ]; then
+  rm /etc/nginx/sites-enabled/*
+else
+  mkdir -p /etc/nginx/sites-enabled/
+fi
+
 if [ "$TAIGA_SSL" = "True" ]; then
-  if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
     ln -s \
-      /etc/nginx/sites-available/taiga-ssl \
-      /etc/nginx/sites-enabled/taiga-events-ssl
+      /etc/nginx/sites-available/taiga-ssl.conf \
+      /etc/nginx/sites-enabled/taiga-ssl.conf
   else
     ln -s \
-      /etc/nginx/sites-available/taiga-ssl \
-      /etc/nginx/sites-enabled/taiga-ssl
+      /etc/nginx/sites-available/taiga-ssl.conf \
+      /etc/nginx/sites-enabled/taiga-events-ssl.conf
   fi
 else
-  if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
     ln -s \
-      /etc/nginx/sites-available/taiga \
-      /etc/nginx/sites-enabled/taiga-events
+      /etc/nginx/sites-available/taiga.conf \
+      /etc/nginx/sites-enabled/taiga.conf
   else
     ln -s \
-      /etc/nginx/sites-available/taiga \
-      /etc/nginx/sites-enabled/taiga
+      /etc/nginx/sites-available/taiga.conf \
+      /etc/nginx/sites-enabled/taiga-events.conf
   fi
 fi
 
