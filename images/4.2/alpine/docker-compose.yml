@@ -169,11 +169,13 @@ services:
   # FIXME Celery docker image is deprecated since 2017
   taiga_celery:
     image: celery
+    container_name: taiga_celery
     links:
       - taiga_rabbit
 
   taiga_events:
     image: monogramm/docker-taiga-events:alpine
+    container_name: taiga_events
     links:
       - taiga_rabbit
     environment:
