@@ -15,10 +15,10 @@ services:
         - POSTGRES_USER=taiga
         - POSTGRES_PASSWORD=${TAIGA_DB_PWD}
 
-  taigaback:
+  taiga_back:
     build: ./back
     #image: monogramm/docker-taiga-back:4.2-alpine
-    container_name: taigaback
+    container_name: taiga_back
     restart: always
     depends_on:
       - taigadb
@@ -27,6 +27,7 @@ services:
     volumes:
       # Media and uploads directory. Required (or you will lose all uploads)
       - /srv/taiga/back/media:/usr/src/taiga-back/media
+      - /srv/taiga/back/static:/usr/src/taiga-back/static
       # Taiga configuration directory. Makes it easier to change configuration with your own
       #- /srv/taiga/back/conf:/taiga
       - /etc/localtime:/etc/localtime:ro
@@ -57,8 +58,9 @@ services:
       - TAIGA_DEBUG=False
       - TAIGA_PUBLIC_REGISTER_ENABLED=False
       # Events settings
-      #- RABBIT_HOST=taigarabbit
-      #- REDIS_HOST=taigaredis
+      #- RABBIT_HOST=taiga_rabbit
+      #- REDIS_HOST=taiga_redis
+      ### Additional parameters
       # Slack
       - TAIGA_ENABLE_SLACK=True
       # GitLab
@@ -83,22 +85,25 @@ services:
       - TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
       - TAIGA_LDAP_FALLBACK=normal
 
-  taigafront:
+  taiga_front:
     build: ./front
     #image: monogramm/docker-taiga-front:4.2-alpine
     hostname: taiga.${DOMAIN}
-    container_name: taigafront
+    container_name: taiga_front
     restart: always
     depends_on:
-      - taigaback
+      - taiga_back
       # To enable taiga-events, uncomment the following lines:
-      # - taigaevents
-      # - taigarabbit
-      # - taigaredis
+      # - taiga_events
+      # - taiga_rabbit
+      # - taiga_redis
     ports:
       - 80:80
       - 443:443
     volumes:
+      # Media and uploads directory. Required for NGinx
+      - /srv/taiga/back/media:/usr/src/taiga-back/media:ro
+      - /srv/taiga/back/static:/usr/src/taiga-back/static:ro
       # Taiga configuration directory. Makes it easier to change configuration with your own
       #- /srv/taiga/front/conf:/taiga
       - /etc/localtime:/etc/localtime:ro
@@ -124,12 +129,13 @@ services:
       - TAIGA_GRAVATAR=true
       - TAIGA_LOGIN_FORM_TYPE=ldap
       # Backend settings
-      - TAIGA_BACK_HOST=taigaback
+      - TAIGA_BACK_HOST=taiga_back
       - TAIGA_BACK_PORT=8000
       # Events settings
       #- TAIGA_EVENTS_HOST=taigaevents
       #- TAIGA_EVENTS_PORT=8888
       #- RABBIT_PORT_5672_TCP_ADDR=True
+      ### Additional parameters
       # GitLab
       - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
       - TAIGA_GITLAB_CLIENT_ID=${TAIGA_GITLAB_CLIENT_ID}
@@ -137,19 +143,29 @@ services:
       - TAIGA_GITHUB_CLIENT_ID=${TAIGA_GITHUB_CLIENT_ID}
 
   # To enable taiga-events, uncomment the following lines:
-  # taigarabbit:
-  #   image: rabbitmq:3
-  #   hostname: rabbit
+  # taiga_rabbit:
+  #   image: rabbitmq:3-alpine
+  #   hostname: taiga_rabbit
+  #   container_name: taiga_rabbit
   # 
-  # taigaredis:
-  #   image: redis:3
+  # taiga_redis:
+  #   image: redis:4.0-alpine
+  #   container_name: taiga_redis
+  #   restart: always
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     - /srv/taiga/redis/:/data
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - /etc/timezone:/etc/timezone:ro
   # 
-  # taigacelery:
+  # # Celery docker image is deprecated since 2017
+  # taiga_celery:
   #   image: celery
   #   links:
-  #     - taigarabbit
+  #     - taiga_rabbit
   # 
-  # taigaevents:
-  #   image: benhutchins/taiga-events
+  # taiga_events:
+  #   image: monogramm/docker-taiga-events
   #   links:
-  #     - taigarabbit
+  #     - taiga_rabbit

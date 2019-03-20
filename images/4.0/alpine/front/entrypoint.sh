@@ -5,6 +5,10 @@ if [ ! -f /taiga/conf.json ]; then
   exit 1
 fi
 
+#########################################
+## Taiga Front config
+#########################################
+
 # Automatically replace "TAIGA_HOSTNAME" with the environment variable
 sed -i "s|TAIGA_HOSTNAME|$TAIGA_HOSTNAME|g" /taiga/conf.json
 
@@ -12,9 +16,13 @@ sed -i "s|TAIGA_HOSTNAME|$TAIGA_HOSTNAME|g" /taiga/conf.json
 if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
   echo "Enabling Taiga Events"
   sed -i \
-    -e "s|eventsUrl\": null|eventsUrl\": \"ws://$TAIGA_HOSTNAME/events\"|g" \
+    -e "s|\"eventsUrl\": .*,|\"eventsUrl\": \"ws://$TAIGA_HOSTNAME/events\",|g" \
     /taiga/conf.json
-  mv /etc/nginx/taiga-events.conf /etc/nginx/conf.d/default.conf
+else
+  echo "Reset Taiga Events"
+  sed -i \
+    -e "s|\"eventsUrl\": .*,|\"eventsUrl\": null,|g" \
+    /taiga/conf.json
 fi
 
 # Handle enabling/disabling SSL
@@ -214,13 +222,43 @@ else
     /taiga/conf.json
 fi
 
+#########################################
+## Taiga NGinx config
+#########################################
+
+# Reinitialize nginx links
+rm /etc/nginx/sites-enabled/*
+if [ "$TAIGA_SSL" = "True" ]; then
+  if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+    ln -s \
+      /etc/nginx/sites-available/taiga-ssl \
+      /etc/nginx/sites-enabled/taiga-events-ssl
+  else
+    ln -s \
+      /etc/nginx/sites-available/taiga-ssl \
+      /etc/nginx/sites-enabled/taiga-ssl
+  fi
+else
+  if [ ! -z "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+    ln -s \
+      /etc/nginx/sites-available/taiga \
+      /etc/nginx/sites-enabled/taiga-events
+  else
+    ln -s \
+      /etc/nginx/sites-available/taiga \
+      /etc/nginx/sites-enabled/taiga
+  fi
+fi
+
 # Look to see if we should update the backend connection
 if [ -n "$TAIGA_BACK_HOST" ]; then
   echo "Updating Taiga Back connection: $TAIGA_BACK_HOST"
   sed -i \
     -e "s|proxy_pass http://.*/api|proxy_pass http://$TAIGA_BACK_HOST:$TAIGA_BACK_PORT/api|g" \
+    /etc/nginx/snippets/api.conf
+  sed -i \
     -e "s|proxy_pass http://.*\$request_uri|proxy_pass http://$TAIGA_BACK_HOST:$TAIGA_BACK_PORT\$request_uri|g" \
-    /etc/nginx/conf.d/default.conf
+    /etc/nginx/snippets/admin.conf
 fi
 
 # Look to see if we should update the events connection
@@ -228,7 +266,7 @@ if [ -n "$TAIGA_EVENTS_HOST" ]; then
   echo "Updating Taiga Events connection: $TAIGA_EVENTS_HOST"
   sed -i \
     -e "s|proxy_pass http://.*/events|proxy_pass http://$TAIGA_EVENTS_HOST:$TAIGA_EVENTS_PORT/events|g" \
-    /etc/nginx/conf.d/default.conf
+    /etc/nginx/snippets/events.conf
 fi
 
 # Start nginx server
