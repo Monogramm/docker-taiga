@@ -38,4 +38,4 @@ RUN set -ex; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-ldap-auth-ext
 
 # Backend healthcheck
-HEALTHCHECK CMD curl --fail http://127.0.0.1:8000/api/v1/ || exit 1
+HEALTHCHECK CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1

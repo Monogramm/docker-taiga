@@ -23,7 +23,7 @@ services:
     depends_on:
       - taigadb
     ports:
-      - 8000:8000
+      - 8001:8001
     volumes:
       # Media and uploads directory. Required (or you will lose all uploads)
       - /srv/taiga/back/media:/usr/src/taiga-back/media
@@ -133,7 +133,7 @@ services:
       - TAIGA_LOGIN_FORM_TYPE=ldap
       # Backend settings
       - TAIGA_BACK_HOST=taiga_back
-      - TAIGA_BACK_PORT=8000
+      - TAIGA_BACK_PORT=8001
       # Events settings
       - TAIGA_EVENTS_HOST=taiga_events
       - TAIGA_EVENTS_PORT=8888
