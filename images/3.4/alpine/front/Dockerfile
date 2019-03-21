@@ -60,6 +60,7 @@ RUN set -ex; \
 
 # Frontend healthcheck
 HEALTHCHECK --interval=60s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl --fail http://localhost:80/conf.json || exit 1
-#    && curl --fail http://localhost
-#    && curl --fail http://localhost/api/v1/
+    CMD curl --fail http://localhost:80/conf.json \
+        && curl --fail http://localhost \
+        && curl --fail http://localhost/api/v1/ \
+        || exit 1
