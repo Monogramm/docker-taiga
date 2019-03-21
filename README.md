@@ -21,13 +21,14 @@ Backend
 
 # Docker image for taiga
 
-This Docker repository provides a custom [taiga-front](https://github.com/taigaio/taiga-front) and [taiga-back](https://github.com/taigaio/taiga-back) with a production ready docker-compose.
+This Docker repository provides a custom [taiga-front](https://github.com/taigaio/taiga-front), [taiga-back](https://github.com/taigaio/taiga-back) and [taiga-events](https://github.com/taigaio/taiga-events) with a production ready docker-compose.
 
 :construction: **This repository is still in development!**
 
 This image was inspired by [ajira86/docker-taiga](https://github.com/ajira86/docker-taiga) which is a fork of [benhutchins/docker-taiga](https://github.com/benhutchins/docker-taiga).
 
-It is based on [Monogramm/docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-base) and [Monogramm/docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base) and add the following plugins:
+It is based on [Monogramm/docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-base), [Monogramm/docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base) and [Monogramm/docker-taiga-events](https://github.com/Monogramm/docker-taiga-events).
+The following plugins have been added:
 * https://github.com/taigaio/taiga-contrib-slack
 * https://github.com/taigaio/taiga-contrib-gitlab-auth
 * https://github.com/taigaio/taiga-contrib-github-auth
