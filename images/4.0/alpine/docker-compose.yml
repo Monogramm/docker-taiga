@@ -1,7 +1,6 @@
 version: '2'
 
 services:
-  # Taiga service
   taigadb:
     image: postgres:10-alpine
     container_name: taigadb
@@ -11,19 +10,20 @@ services:
     volumes:
       - /srv/taiga/db/data:/var/lib/postgresql/data
     environment:
-        - POSTGRES_DB=taiga
-        - POSTGRES_USER=taiga
-        - POSTGRES_PASSWORD=${TAIGA_DB_PWD}
+      - POSTGRES_DB=taiga
+      - POSTGRES_USER=taiga
+      - POSTGRES_PASSWORD=${TAIGA_DB_PWD}
 
   taiga_back:
     build: ./back
     #image: monogramm/docker-taiga-back:4.0-alpine
+    hostname: taiga.${DOMAIN}
     container_name: taiga_back
     restart: always
     depends_on:
       - taigadb
     ports:
-      - 8000:8000
+      - 8001:8001
     volumes:
       # Media and uploads directory. Required (or you will lose all uploads)
       - /srv/taiga/back/media:/usr/src/taiga-back/media
@@ -58,22 +58,25 @@ services:
       - TAIGA_DEBUG=False
       - TAIGA_PUBLIC_REGISTER_ENABLED=False
       # Events settings
-      #- RABBIT_HOST=taiga_rabbit
-      #- REDIS_HOST=taiga_redis
+      - RABBIT_USER=${TAIGA_RABBIT_USER}
+      - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_HOST=taiga_rabbit
+      - RABBIT_PORT=5672
+      - REDIS_HOST=taiga_redis
       ### Additional parameters
       # Slack
       - TAIGA_ENABLE_SLACK=True
       # GitLab
-      - TAIGA_ENABLE_GITLAB=True
+      - TAIGA_ENABLE_GITLAB=False
       - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
       - TAIGA_GITLAB_CLIENT_ID=${TAIGA_GITLAB_CLIENT_ID}
       - TAIGA_GITLAB_CLIENT_SECRET=${TAIGA_GITLAB_CLIENT_SECRET}
       # GitHub
-      - TAIGA_ENABLE_GITHUB=True
+      - TAIGA_ENABLE_GITHUB=False
       - TAIGA_GITHUB_CLIENT_ID=${TAIGA_GITHUB_CLIENT_ID}
       - TAIGA_GITHUB_CLIENT_SECRET=${TAIGA_GITHUB_CLIENT_SECRET}
       # LDAP Settings
-      - TAIGA_ENABLE_LDAP=True
+      - TAIGA_ENABLE_LDAP=False
       - TAIGA_LDAP_USE_TLS=True
       - TAIGA_LDAP_SERVER=ldap://${TAIGA_LDAP_DOMAIN}
       - TAIGA_LDAP_PORT=389
@@ -93,10 +96,10 @@ services:
     restart: always
     depends_on:
       - taiga_back
-      # To enable taiga-events, uncomment the following lines:
-      # - taiga_events
-      # - taiga_rabbit
-      # - taiga_redis
+      # To disable taiga-events, comment the following lines:
+      - taiga_events
+      - taiga_rabbit
+      - taiga_redis
     ports:
       - 80:80
       - 443:443
@@ -120,9 +123,9 @@ services:
       - TAIGA_DEFAULT_THEME=taiga
       - TAIGA_PUBLIC_REGISTER_ENABLED=false
       - TAIGA_SUPPORT_URL=https://tree.taiga.io/support
-      - TAIGA_PRIVACY_POLICY_URL=''
-      - TAIGA_TOS_URL=''
-      - TAIGA_GDPR_URL=''
+      - TAIGA_PRIVACY_POLICY_URL=
+      - TAIGA_TOS_URL=
+      - TAIGA_GDPR_URL=
       - TAIGA_MAX_UPLOAD_SIZE=104857600
       - TAIGA_CONTRIB_PLUGINS='slack cookie-warning'
       #- TAIGA_CONTRIB_PLUGINS='slack cookie-warning gitlab-auth github-auth'
@@ -130,11 +133,11 @@ services:
       - TAIGA_LOGIN_FORM_TYPE=ldap
       # Backend settings
       - TAIGA_BACK_HOST=taiga_back
-      - TAIGA_BACK_PORT=8000
+      - TAIGA_BACK_PORT=8001
       # Events settings
-      #- TAIGA_EVENTS_HOST=taigaevents
-      #- TAIGA_EVENTS_PORT=8888
-      #- RABBIT_PORT_5672_TCP_ADDR=True
+      - TAIGA_EVENTS_HOST=taiga_events
+      - TAIGA_EVENTS_PORT=8888
+      - RABBIT_PORT_5672_TCP_ADDR=True
       ### Additional parameters
       # GitLab
       - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
@@ -142,30 +145,44 @@ services:
       # GitHub
       - TAIGA_GITHUB_CLIENT_ID=${TAIGA_GITHUB_CLIENT_ID}
 
-  # To enable taiga-events, uncomment the following lines:
-  # taiga_rabbit:
-  #   image: rabbitmq:3-alpine
-  #   hostname: taiga_rabbit
-  #   container_name: taiga_rabbit
-  # 
-  # taiga_redis:
-  #   image: redis:4.0-alpine
-  #   container_name: taiga_redis
-  #   restart: always
-  #   ports:
-  #     - 6379:6379
-  #   volumes:
-  #     - /srv/taiga/redis/:/data
-  #     - /etc/localtime:/etc/localtime:ro
-  #     - /etc/timezone:/etc/timezone:ro
-  # 
-  # # Celery docker image is deprecated since 2017
-  # taiga_celery:
-  #   image: celery
-  #   links:
-  #     - taiga_rabbit
-  # 
-  # taiga_events:
-  #   image: monogramm/docker-taiga-events
-  #   links:
-  #     - taiga_rabbit
+  # To disable taiga-events, comment all the following lines:
+  taiga_rabbit:
+    image: rabbitmq:3-alpine
+    hostname: taiga_rabbit
+    container_name: taiga_rabbit
+    ports:
+      - 5672:5672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${TAIGA_RABBIT_USER}
+      - RABBITMQ_DEFAULT_PASS=${TAIGA_RABBIT_PASSWORD}
+
+  taiga_redis:
+    image: redis:4.0-alpine
+    container_name: taiga_redis
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - /srv/taiga/redis/:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+  # FIXME Celery docker image is deprecated since 2017
+  taiga_celery:
+    image: celery
+    container_name: taiga_celery
+    links:
+      - taiga_rabbit
+
+  taiga_events:
+    image: monogramm/docker-taiga-events:alpine
+    container_name: taiga_events
+    links:
+      - taiga_rabbit
+    environment:
+      - RABBIT_USER=${TAIGA_RABBIT_USER}
+      - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_HOST=taiga_rabbit
+      - RABBIT_PORT=5672
+      - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
+      - TAIGA_EVENTS_PORT=8888

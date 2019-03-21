@@ -259,11 +259,8 @@ fi
 if [ -n "$TAIGA_BACK_HOST" ]; then
   echo "Updating Taiga Back connection: $TAIGA_BACK_HOST"
   sed -i \
-    -e "s|proxy_pass http://.*/api|proxy_pass http://$TAIGA_BACK_HOST:$TAIGA_BACK_PORT/api|g" \
-    /etc/nginx/snippets/api.conf
-  sed -i \
-    -e "s|proxy_pass http://.*\$request_uri|proxy_pass http://$TAIGA_BACK_HOST:$TAIGA_BACK_PORT\$request_uri|g" \
-    /etc/nginx/snippets/admin.conf
+    -e "s|server .*;|server $TAIGA_BACK_HOST:$TAIGA_BACK_PORT;|g" \
+    /etc/nginx/snippets/upstream.conf
 fi
 
 # Look to see if we should update the events connection
@@ -274,5 +271,8 @@ if [ -n "$TAIGA_EVENTS_HOST" ]; then
     /etc/nginx/snippets/events.conf
 fi
 
-# Start nginx server
+echo "Checking nginx configuration..."
+nginx -t
+
+echo "Start nginx server..."
 nginx -g "daemon off;"
