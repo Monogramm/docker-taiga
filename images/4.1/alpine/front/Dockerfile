@@ -3,9 +3,9 @@ FROM monogramm/docker-taiga-front-base:4.1-alpine
 LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
 
 # Taiga additional properties
-ENV TAIGA_GITLAB_CLIENT_ID='' \
+ENV TAIGA_GITLAB_CLIENT_ID= \
     TAIGA_GITLAB_URL=https://gitlab.com \
-    TAIGA_GITHUB_CLIENT_ID=''
+    TAIGA_GITHUB_CLIENT_ID=
 
 # Erase original entrypoint and conf with custom one
 COPY entrypoint.sh /
