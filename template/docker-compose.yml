@@ -17,6 +17,7 @@ services:
   taiga_back:
     build: ./back
     #image: monogramm/docker-taiga-back:%%VERSION%%-%%VARIANT%%
+    hostname: taiga.${DOMAIN}
     container_name: taiga_back
     restart: always
     depends_on:
