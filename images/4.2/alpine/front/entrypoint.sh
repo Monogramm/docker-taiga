@@ -271,5 +271,8 @@ if [ -n "$TAIGA_EVENTS_HOST" ]; then
     /etc/nginx/snippets/events.conf
 fi
 
-# Start nginx server
+echo "Checking nginx configuration..."
+nginx -t
+
+echo "Start nginx server..."
 nginx -g "daemon off;"
