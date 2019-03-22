@@ -58,11 +58,15 @@ services:
       - TAIGA_DEBUG=False
       - TAIGA_PUBLIC_REGISTER_ENABLED=False
       # Events settings
+      - TAIGA_EVENTS_ENABLED=True
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
+      # Async settings
+      - TAIGA_ASYNC_ENABLED=True
       - REDIS_HOST=taiga_redis
+      - REDIS_PORT=6379
       ### Additional parameters
       # Slack
       - TAIGA_ENABLE_SLACK=True
@@ -99,6 +103,7 @@ services:
       # To disable taiga-events, comment the following lines:
       - taiga_events
       - taiga_rabbit
+      # To disable async mode, comment the following lines:
       - taiga_redis
     ports:
       - 80:80
@@ -135,9 +140,9 @@ services:
       - TAIGA_BACK_HOST=taiga_back
       - TAIGA_BACK_PORT=8001
       # Events settings
+      - TAIGA_EVENTS_ENABLED=True
       - TAIGA_EVENTS_HOST=taiga_events
       - TAIGA_EVENTS_PORT=8888
-      - RABBIT_PORT_5672_TCP_ADDR=True
       ### Additional parameters
       # GitLab
       - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
@@ -156,6 +161,22 @@ services:
       - RABBITMQ_DEFAULT_USER=${TAIGA_RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${TAIGA_RABBIT_PASSWORD}
 
+  taiga_events:
+    image: monogramm/docker-taiga-events:alpine
+    container_name: taiga_events
+    links:
+      - taiga_rabbit
+    ports:
+      - 8888:8888
+    environment:
+      - RABBIT_USER=${TAIGA_RABBIT_USER}
+      - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_HOST=taiga_rabbit
+      - RABBIT_PORT=5672
+      - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
+      - TAIGA_EVENTS_PORT=8888
+
+  # To enable async mode, uncomment the following lines:
   taiga_redis:
     image: redis:4.0-alpine
     container_name: taiga_redis
@@ -173,16 +194,4 @@ services:
     container_name: taiga_celery
     links:
       - taiga_rabbit
-
-  taiga_events:
-    image: monogramm/docker-taiga-events:alpine
-    container_name: taiga_events
-    links:
-      - taiga_rabbit
-    environment:
-      - RABBIT_USER=${TAIGA_RABBIT_USER}
-      - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
-      - RABBIT_HOST=taiga_rabbit
-      - RABBIT_PORT=5672
-      - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
-      - TAIGA_EVENTS_PORT=8888
+      - taiga_redis

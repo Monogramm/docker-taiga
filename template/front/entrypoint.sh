@@ -13,7 +13,7 @@ fi
 sed -i "s|TAIGA_HOSTNAME|$TAIGA_HOSTNAME|g" /taiga/conf.json
 
 # Look to see if we should set the "eventsUrl"
-if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+if [ -n "$TAIGA_EVENTS_ENABLED" ]; then
   echo "Enabling Taiga Events"
   sed -i \
     -e "s|\"eventsUrl\": .*,|\"eventsUrl\": \"ws://$TAIGA_HOSTNAME/events\",|g" \
@@ -231,7 +231,7 @@ if [ -d /etc/nginx/conf.d/ ]; then
 fi
 
 if [ "$TAIGA_SSL" = "True" ]; then
-  if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  if [ -n "$TAIGA_EVENTS_ENABLED" ]; then
     ln -s \
       /etc/nginx/sites-available/taiga-events-ssl.conf \
       /etc/nginx/conf.d/taiga.conf
@@ -241,7 +241,7 @@ if [ "$TAIGA_SSL" = "True" ]; then
       /etc/nginx/conf.d/taiga.conf
   fi
 else
-  if [ -n "$RABBIT_PORT_5672_TCP_ADDR" ]; then
+  if [ -n "$TAIGA_EVENTS_ENABLED" ]; then
     ln -s \
       /etc/nginx/sites-available/taiga-events.conf \
       /etc/nginx/conf.d/taiga.conf
