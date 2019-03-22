@@ -10,7 +10,7 @@
     "themes": ["taiga", "material-design", "high-contrast"],
     "defaultTheme": "taiga",
     "publicRegisterEnabled": false,
-    "feedbackEnabled": true,
+    "feedbackEnabled": false,
     "supportUrl": "https://tree.taiga.io/support",
     "privacyPolicyUrl": null,
     "termsOfServiceUrl": null,

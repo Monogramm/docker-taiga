@@ -57,12 +57,16 @@ services:
       # Backend settings
       - TAIGA_DEBUG=False
       - TAIGA_PUBLIC_REGISTER_ENABLED=False
+      - TAIGA_FEEDBACK_ENABLED=True
+      - TAIGA_FEEDBACK_EMAIL=taiga@${TAIGA_EMAIL_DOMAIN}
       # Events settings
+      - TAIGA_EVENTS_ENABLED=True
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       # Async settings
+      - TAIGA_ASYNC_ENABLED=True
       - REDIS_HOST=taiga_redis
       - REDIS_PORT=6379
       ### Additional parameters
@@ -125,6 +129,7 @@ services:
       - TAIGA_DEFAULT_LANGUAGE=en
       - TAIGA_DEFAULT_THEME=taiga
       - TAIGA_PUBLIC_REGISTER_ENABLED=false
+      - TAIGA_FEEDBACK_ENABLED=True
       - TAIGA_SUPPORT_URL=https://tree.taiga.io/support
       - TAIGA_PRIVACY_POLICY_URL=
       - TAIGA_TOS_URL=

@@ -81,6 +81,13 @@ if [ -n "$TAIGA_PUBLIC_REGISTER_ENABLED" ]; then
     /taiga/conf.json
 fi
 
+if [ -n "$TAIGA_FEEDBACK_ENABLED" ]; then
+  echo "Updating Taiga Front feedback status: $TAIGA_FEEDBACK_ENABLED"
+  sed -i \
+    -e "s|\"feedbackEnabled\": .*,|\"feedbackEnabled\": $TAIGA_FEEDBACK_ENABLED,|g" \
+    /taiga/conf.json
+fi
+
 if [ -n "$TAIGA_SUPPORT_URL" ]; then
   echo "Updating Taiga Front support URL: $TAIGA_SUPPORT_URL"
   sed -i \
