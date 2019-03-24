@@ -25,19 +25,9 @@ ___
 
 # Docker image for taiga
 
-This Docker repository provides custom [taiga-front](https://github.com/taigaio/taiga-front) and [taiga-back](https://github.com/taigaio/taiga-back) docker images with a production ready docker-compose.
+This Docker repository provides custom [taiga-front](https://github.com/taigaio/taiga-front) and [taiga-back](https://github.com/taigaio/taiga-back) docker images with additional plugins and a production ready docker-compose.
 
 These images were inspired by [ajira86/docker-taiga](https://github.com/ajira86/docker-taiga) which is a fork of [benhutchins/docker-taiga](https://github.com/benhutchins/docker-taiga).
-
-It is based on [Monogramm/docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-base), [Monogramm/docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base) and [Monogramm/docker-taiga-events](https://github.com/Monogramm/docker-taiga-events).
-
-The following plugins have been added to backend and frontend:
-* https://github.com/taigaio/taiga-contrib-slack
-* https://github.com/taigaio/taiga-contrib-gitlab-auth
-* https://github.com/taigaio/taiga-contrib-github-auth
-* https://github.com/taigaio/taiga-contrib-cookie-warning
-* https://github.com/Monogramm/taiga-contrib-ldap-auth-ext
-
 
 ## What is Taiga?
 
@@ -57,12 +47,19 @@ You can also build all images by running `update.sh build`.
 
 ## Run Docker-compose
 
-* Run `cd images/VARIANT/VERSION` for the variant and version you need;
-* Edit the `.env` file with your environment information;
-* Run `docker-compose up -d` to start the containers.
+* Run `cd images/VARIANT/VERSION` for the variant and version you need
+* Edit the `.env` file with your environment information
+* (Optional) Comment the `build: ` and uncomment the `image: ` to use official images and not build from local Dockerfile
+* Run `docker-compose up -d` to start the containers
 
 
 ## Frontend
+
+The front is based on [Monogramm/docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-base) and adds the following plugins:
+* https://github.com/taigaio/taiga-contrib-slack
+* https://github.com/taigaio/taiga-contrib-gitlab-auth
+* https://github.com/taigaio/taiga-contrib-github-auth
+* https://github.com/taigaio/taiga-contrib-cookie-warning
 
 ### Frontend Auto configuration via environment variables
 
@@ -73,7 +70,7 @@ See [docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-ba
 This image also provides healthchecks and additionnal configuration properties.
 
 
-#### TAIGA_GITLAB_CLIENT_ID
+#### TAIGA_GITLAB_AUTH_CLIENT_ID
 
 *Default value*: 
 
@@ -81,10 +78,10 @@ GitLab Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=gitlab-a
 
 Examples:
 ```yml
-TAIGA_GITLAB_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_gitlab_XXXXXX
+TAIGA_GITLAB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
 ```
 
-#### TAIGA_GITLAB_URL
+#### TAIGA_GITLAB_AUTH_URL
 
 *Default value*: `https://gitlab.com`
 
@@ -92,13 +89,13 @@ GitLab Authentication instance URL.
 
 Examples:
 ```yml
-TAIGA_GITLAB_URL=https://gitlab.com
+TAIGA_GITLAB_AUTH_URL=https://gitlab.com
 ```
 ```yml
-TAIGA_GITLAB_URL=https://gitlab.company.com
+TAIGA_GITLAB_AUTH_URL=https://gitlab.company.com
 ```
 
-#### TAIGA_GITHUB_CLIENT_ID
+#### TAIGA_GITHUB_AUTH_CLIENT_ID
 
 *Default value*: 
 
@@ -106,11 +103,17 @@ GitHub Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=github-a
 
 Examples:
 ```yml
-TAIGA_GITHUB_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_github_XXXXXX
+TAIGA_GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
 ```
 
 
 ## Backend
+
+The image is based on [Monogramm/docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base) and add the following plugins:
+* https://github.com/taigaio/taiga-contrib-slack
+* https://github.com/taigaio/taiga-contrib-gitlab-auth
+* https://github.com/taigaio/taiga-contrib-github-auth
+* https://github.com/Monogramm/taiga-contrib-ldap-auth-ext
 
 ### Backend Auto configuration via environment variables
 
@@ -133,37 +136,37 @@ TAIGA_ENABLE_SLACK=False
 TAIGA_ENABLE_SLACK=True
 ```
 
-#### TAIGA_ENABLE_GITLAB
+#### TAIGA_ENABLE_GITLAB_AUTH
 
 *Default value*: `False`
 
-Enable Taiga GitLab Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=gitlab-auth` and `TAIGA_GITLAB_CLIENT_ID` in the frontend too.
+Enable Taiga GitLab Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=gitlab-auth` and `TAIGA_GITLAB_AUTH_CLIENT_ID` in the frontend too.
 
 Examples:
 ```yml
-TAIGA_ENABLE_GITLAB=False
+TAIGA_ENABLE_GITLAB_AUTH=False
 ```
 ```yml
-TAIGA_ENABLE_GITLAB=True
-TAIGA_GITLAB_URL=https://gitlab.com
-TAIGA_GITLAB_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_gitlab_XXXXXX
-TAIGA_GITLAB_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_gitlab_XXXXXX
+TAIGA_ENABLE_GITLAB_AUTH=True
+TAIGA_GITLAB_AUTH_URL=https://gitlab.com
+TAIGA_GITLAB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
+TAIGA_GITLAB_AUTH_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITLAB_AUTH_XXXXXX
 ```
 
-#### TAIGA_ENABLE_GITHUB
+#### TAIGA_ENABLE_GITHUB_AUTH
 
 *Default value*: `False`
 
-Enable Taiga GitHub Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=github-auth` and `TAIGA_GITHUB_CLIENT_ID` in the frontend too.
+Enable Taiga GitHub Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=github-auth` and `TAIGA_GITHUB_AUTH_CLIENT_ID` in the frontend too.
 
 Examples:
 ```yml
-TAIGA_ENABLE_GITHUB=False
+TAIGA_ENABLE_GITHUB_AUTH=False
 ```
 ```yml
-TAIGA_ENABLE_GITHUB=True
-TAIGA_GITHUB_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_github_XXXXXX
-TAIGA_GITHUB_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_github_XXXXXX
+TAIGA_ENABLE_GITHUB_AUTH=True
+TAIGA_GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
+TAIGA_GITHUB_AUTH_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITHUB_AUTH_XXXXXX
 ```
 
 #### TAIGA_ENABLE_LDAP

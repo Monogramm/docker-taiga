@@ -66,21 +66,22 @@ services:
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       # Async settings
-      - TAIGA_ASYNC_ENABLED=True
-      - REDIS_HOST=taiga_redis
-      - REDIS_PORT=6379
+      # To enable async mode, uncomment the following lines:
+      #- TAIGA_ASYNC_ENABLED=True
+      #- REDIS_HOST=taiga_redis
+      #- REDIS_PORT=6379
       ### Additional parameters
       # Slack
       - TAIGA_ENABLE_SLACK=True
       # GitLab
-      - TAIGA_ENABLE_GITLAB=False
-      - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
-      - TAIGA_GITLAB_CLIENT_ID=${TAIGA_GITLAB_CLIENT_ID}
-      - TAIGA_GITLAB_CLIENT_SECRET=${TAIGA_GITLAB_CLIENT_SECRET}
+      - TAIGA_ENABLE_GITLAB_AUTH=False
+      - TAIGA_GITLAB_AUTH_URL=${TAIGA_GITLAB_AUTH_URL}
+      - TAIGA_GITLAB_AUTH_CLIENT_ID=${TAIGA_GITLAB_AUTH_CLIENT_ID}
+      - TAIGA_GITLAB_AUTH_CLIENT_SECRET=${TAIGA_GITLAB_AUTH_CLIENT_SECRET}
       # GitHub
-      - TAIGA_ENABLE_GITHUB=False
-      - TAIGA_GITHUB_CLIENT_ID=${TAIGA_GITHUB_CLIENT_ID}
-      - TAIGA_GITHUB_CLIENT_SECRET=${TAIGA_GITHUB_CLIENT_SECRET}
+      - TAIGA_ENABLE_GITHUB_AUTH=False
+      - TAIGA_GITHUB_AUTH_CLIENT_ID=${TAIGA_GITHUB_AUTH_CLIENT_ID}
+      - TAIGA_GITHUB_AUTH_CLIENT_SECRET=${TAIGA_GITHUB_AUTH_CLIENT_SECRET}
       # LDAP Settings
       - TAIGA_ENABLE_LDAP=False
       - TAIGA_LDAP_USE_TLS=True
@@ -105,8 +106,8 @@ services:
       # To disable taiga-events, comment the following lines:
       - taiga_events
       - taiga_rabbit
-      # To disable async mode, comment the following lines:
-      - taiga_redis
+      # To enable async mode, uncomment the following lines:
+      #- taiga_redis
     ports:
       - 80:80
       - 443:443
@@ -148,10 +149,10 @@ services:
       - TAIGA_EVENTS_PORT=8888
       ### Additional parameters
       # GitLab
-      - TAIGA_GITLAB_URL=${TAIGA_GITLAB_URL}
-      - TAIGA_GITLAB_CLIENT_ID=${TAIGA_GITLAB_CLIENT_ID}
+      - TAIGA_GITLAB_AUTH_URL=${TAIGA_GITLAB_AUTH_URL}
+      - TAIGA_GITLAB_AUTH_CLIENT_ID=${TAIGA_GITLAB_AUTH_CLIENT_ID}
       # GitHub
-      - TAIGA_GITHUB_CLIENT_ID=${TAIGA_GITHUB_CLIENT_ID}
+      - TAIGA_GITHUB_AUTH_CLIENT_ID=${TAIGA_GITHUB_AUTH_CLIENT_ID}
 
   # To disable taiga-events, comment all the following lines:
   taiga_rabbit:
@@ -180,21 +181,21 @@ services:
       - TAIGA_EVENTS_PORT=8888
 
   # To enable async mode, uncomment the following lines:
-  taiga_redis:
-    image: redis:4.0-alpine
-    container_name: taiga_redis
-    restart: always
-    ports:
-      - 6379:6379
-    volumes:
-      - /srv/taiga/redis/:/data
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-
-  # FIXME Celery docker image is deprecated since 2017
-  taiga_celery:
-    image: celery
-    container_name: taiga_celery
-    links:
-      - taiga_rabbit
-      - taiga_redis
+#  taiga_redis:
+#    image: redis:4.0-alpine
+#    container_name: taiga_redis
+#    restart: always
+#    ports:
+#      - 6379:6379
+#    volumes:
+#      - /srv/taiga/redis/:/data
+#      - /etc/localtime:/etc/localtime:ro
+#      - /etc/timezone:/etc/timezone:ro
+#
+#  # FIXME Celery docker image is deprecated since 2017
+#  taiga_celery:
+#    image: celery
+#    container_name: taiga_celery
+#    links:
+#      - taiga_rabbit
+#      - taiga_redis
