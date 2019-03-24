@@ -18,6 +18,7 @@ import ssl
 
 if os.getenv('TAIGA_ENABLE_SLACK').lower() == 'true':
     # https://github.com/taigaio/taiga-contrib-slack
+    print("Taiga contrib slack enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_slack"]
 
 
@@ -27,6 +28,7 @@ if os.getenv('TAIGA_ENABLE_SLACK').lower() == 'true':
 
 if os.getenv('TAIGA_ENABLE_GITLAB_AUTH').lower() == 'true':
     # see https://github.com/taigaio/taiga-contrib-gitlab-auth
+    print("Taiga contrib GitLab Auth enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_gitlab_auth"]
 
     # Get these from Admin -> Applications
@@ -41,6 +43,7 @@ if os.getenv('TAIGA_ENABLE_GITLAB_AUTH').lower() == 'true':
 
 if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
     # see https://github.com/taigaio/taiga-contrib-gitlab-auth
+    print("Taiga contrib GitHub Auth enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_github_auth"]
 
     # Get these from https://github.com/settings/developers
@@ -56,6 +59,7 @@ if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
 
 if os.getenv('TAIGA_ENABLE_EMAIL').lower() == 'true':
     # see https://github.com/Monogramm/taiga-contrib-ldap-auth-ext
+    print("Taiga contrib LDAP Auth Ext enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_ldap_auth_ext"]
 
     if os.getenv('TAIGA_LDAP_USE_TLS').lower() == 'true':
