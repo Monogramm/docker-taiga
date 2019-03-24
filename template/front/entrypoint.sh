@@ -168,11 +168,11 @@ fi
 ## GITLAB
 #########################################
 
-if [ -n "$TAIGA_GITLAB_CLIENT_ID" ]; then
-  echo "Updating Taiga Front GitLab client id and URL: $TAIGA_GITLAB_URL - $TAIGA_GITLAB_CLIENT_ID"
+if [ -n "$TAIGA_GITLAB_AUTH_CLIENT_ID" ]; then
+  echo "Updating Taiga Front GitLab client id and URL: $TAIGA_GITLAB_AUTH_URL - $TAIGA_GITLAB_AUTH_CLIENT_ID"
   sed -i \
-    -e "s|\"gitLabClientId\": \".*\",|\"gitLabClientId\": \"$TAIGA_GITLAB_CLIENT_ID\",|g" \
-    -e "s|\"gitLabUrl\": \".*\",|\"gitLabUrl\": \"$TAIGA_GITLAB_URL\",|g" \
+    -e "s|\"gitLabClientId\": \".*\",|\"gitLabClientId\": \"$TAIGA_GITLAB_AUTH_CLIENT_ID\",|g" \
+    -e "s|\"gitLabUrl\": \".*\",|\"gitLabUrl\": \"$TAIGA_GITLAB_AUTH_URL\",|g" \
     /taiga/conf.json
 fi
 
@@ -183,10 +183,10 @@ fi
 ## GITHUB
 #########################################
 
-if [ -n "$TAIGA_GITHUB_CLIENT_ID" ]; then
-  echo "Updating Taiga Front GitHub client id: $TAIGA_GITHUB_CLIENT_ID"
+if [ -n "$TAIGA_GITHUB_AUTH_CLIENT_ID" ]; then
+  echo "Updating Taiga Front GitHub client id: $TAIGA_GITHUB_AUTH_CLIENT_ID"
   sed -i \
-    -e "s|\"gitHubClientId\": \".*\",|\"gitHubClientId\": \"$TAIGA_GITHUB_CLIENT_ID\",|g" \
+    -e "s|\"gitHubClientId\": \".*\",|\"gitHubClientId\": \"$TAIGA_GITHUB_AUTH_CLIENT_ID\",|g" \
     /taiga/conf.json
 fi
 

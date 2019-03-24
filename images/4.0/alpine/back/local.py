@@ -18,6 +18,7 @@ import ssl
 
 if os.getenv('TAIGA_ENABLE_SLACK').lower() == 'true':
     # https://github.com/taigaio/taiga-contrib-slack
+    print("Taiga contrib slack enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_slack"]
 
 
@@ -25,29 +26,31 @@ if os.getenv('TAIGA_ENABLE_SLACK').lower() == 'true':
 ## GITLAB
 #########################################
 
-if os.getenv('TAIGA_ENABLE_GITLAB').lower() == 'true':
+if os.getenv('TAIGA_ENABLE_GITLAB_AUTH').lower() == 'true':
     # see https://github.com/taigaio/taiga-contrib-gitlab-auth
+    print("Taiga contrib GitLab Auth enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_gitlab_auth"]
 
     # Get these from Admin -> Applications
-    GITLAB_URL = os.getenv('TAIGA_GITLAB_URL')
-    GITLAB_API_CLIENT_ID = os.getenv('TAIGA_GITLAB_CLIENT_ID')
-    GITLAB_API_CLIENT_SECRET = os.getenv('TAIGA_GITLAB_CLIENT_SECRET')
+    GITLAB_URL = os.getenv('TAIGA_GITLAB_AUTH_URL')
+    GITLAB_API_CLIENT_ID = os.getenv('TAIGA_GITLAB_AUTH_CLIENT_ID')
+    GITLAB_API_CLIENT_SECRET = os.getenv('TAIGA_GITLAB_AUTH_CLIENT_SECRET')
 
 
 #########################################
 ## GITHUB
 #########################################
 
-if os.getenv('TAIGA_ENABLE_GITHUB').lower() == 'true':
+if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
     # see https://github.com/taigaio/taiga-contrib-gitlab-auth
+    print("Taiga contrib GitHub Auth enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_github_auth"]
 
     # Get these from https://github.com/settings/developers
     GITHUB_URL = "https://github.com/"
     GITHUB_API_URL = "https://api.github.com/"
-    GITHUB_API_CLIENT_ID = os.getenv('TAIGA_GITHUB_CLIENT_ID')
-    GITHUB_API_CLIENT_SECRET = os.getenv('TAIGA_GITHUB_CLIENT_SECRET')
+    GITHUB_API_CLIENT_ID = os.getenv('TAIGA_GITHUB_AUTH_CLIENT_ID')
+    GITHUB_API_CLIENT_SECRET = os.getenv('TAIGA_GITHUB_AUTH_CLIENT_SECRET')
 
 
 #########################################
@@ -56,6 +59,7 @@ if os.getenv('TAIGA_ENABLE_GITHUB').lower() == 'true':
 
 if os.getenv('TAIGA_ENABLE_EMAIL').lower() == 'true':
     # see https://github.com/Monogramm/taiga-contrib-ldap-auth-ext
+    print("Taiga contrib LDAP Auth Ext enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_ldap_auth_ext"]
 
     if os.getenv('TAIGA_LDAP_USE_TLS').lower() == 'true':
