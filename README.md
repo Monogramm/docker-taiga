@@ -36,6 +36,18 @@ Taiga is a project management platform for startups and agile developers & desig
 > [taiga.io](https://taiga.io)
 
 
+## Supported tags
+
+https://hub.docker.com/r/monogramm/docker-taiga-front/
+https://hub.docker.com/r/monogramm/docker-taiga-back/
+
+-	`3.3`, `3.3-alpine`
+-	`3.4`, `3.4-alpine`, `3`, `3-alpine`
+-	`4.0`, `4.0-alpine`
+-	`4.1`, `4.1-alpine`
+-	`4.2-alpine`, `4.2`, `4-alpine`, `4`, `alpine`, `latest`
+
+
 ## Build Docker-compose
 
 To generate docker images from the template, execute `update.sh` script.
