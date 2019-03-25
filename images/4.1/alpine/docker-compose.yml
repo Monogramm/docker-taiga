@@ -45,7 +45,7 @@ services:
       - TAIGA_DB_USER=taiga
       - TAIGA_DB_PASSWORD=${TAIGA_DB_PWD}
       # when the db comes up from docker, it is usually too quick
-      - TAIGA_SLEEP=2
+      - TAIGA_SLEEP=5
       # To use an external SMTP for emails, fill in these values:
       - TAIGA_ENABLE_EMAIL=True
       - TAIGA_EMAIL_FROM=taiga@${TAIGA_EMAIL_DOMAIN}
