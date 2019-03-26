@@ -4,7 +4,7 @@ services:
   taigadb:
     image: postgres:10-alpine
     container_name: taigadb
-    restart: always
+    #restart: always
     ports:
       - 5432:5432
     volumes:
