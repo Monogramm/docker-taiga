@@ -39,6 +39,8 @@ services:
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
       # Secret key for cryptographic signing
       - TAIGA_SECRET_KEY=${TAIGA_SECRET}
+      # Admin account default password
+      - TAIGA_ADMIN_PASSWORD=${TAIGA_ADMIN_PASSWORD}
       # Database settings
       - TAIGA_DB_HOST=taigadb
       - TAIGA_DB_NAME=taiga

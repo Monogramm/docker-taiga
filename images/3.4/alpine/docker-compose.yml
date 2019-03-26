@@ -4,7 +4,7 @@ services:
   taigadb:
     image: postgres:10-alpine
     container_name: taigadb
-    restart: always
+    #restart: always
     ports:
       - 5432:5432
     volumes:
@@ -19,7 +19,7 @@ services:
     #image: monogramm/docker-taiga-back:3.4-alpine
     hostname: taiga.${DOMAIN}
     container_name: taiga_back
-    restart: always
+    #restart: always
     depends_on:
       - taigadb
     ports:
@@ -39,6 +39,8 @@ services:
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
       # Secret key for cryptographic signing
       - TAIGA_SECRET_KEY=${TAIGA_SECRET}
+      # Admin account default password
+      - TAIGA_ADMIN_PASSWORD=${TAIGA_ADMIN_PASSWORD}
       # Database settings
       - TAIGA_DB_HOST=taigadb
       - TAIGA_DB_NAME=taiga
@@ -100,7 +102,7 @@ services:
     #image: monogramm/docker-taiga-front:3.4-alpine
     hostname: taiga.${DOMAIN}
     container_name: taiga_front
-    restart: always
+    #restart: always
     depends_on:
       - taiga_back
       # To disable taiga-events, comment the following lines:
@@ -159,6 +161,7 @@ services:
     image: rabbitmq:3-alpine
     hostname: taiga_rabbit
     container_name: taiga_rabbit
+    #restart: always
     ports:
       - 5672:5672
     environment:
@@ -168,6 +171,7 @@ services:
   taiga_events:
     image: monogramm/docker-taiga-events:alpine
     container_name: taiga_events
+    #restart: always
     links:
       - taiga_rabbit
     ports:
@@ -196,6 +200,7 @@ services:
 #  taiga_celery:
 #    image: celery
 #    container_name: taiga_celery
+#    restart: always
 #    links:
 #      - taiga_rabbit
 #      - taiga_redis
