@@ -19,7 +19,7 @@ services:
     #image: monogramm/docker-taiga-back:%%VERSION%%-%%VARIANT%%
     hostname: taiga.${DOMAIN}
     container_name: taiga_back
-    restart: always
+    #restart: always
     depends_on:
       - taigadb
     ports:
@@ -100,7 +100,7 @@ services:
     #image: monogramm/docker-taiga-front:%%VERSION%%-%%VARIANT%%
     hostname: taiga.${DOMAIN}
     container_name: taiga_front
-    restart: always
+    #restart: always
     depends_on:
       - taiga_back
       # To disable taiga-events, comment the following lines:
@@ -159,6 +159,7 @@ services:
     image: rabbitmq:3-alpine
     hostname: taiga_rabbit
     container_name: taiga_rabbit
+    #restart: always
     ports:
       - 5672:5672
     environment:
@@ -168,6 +169,7 @@ services:
   taiga_events:
     image: monogramm/docker-taiga-events:alpine
     container_name: taiga_events
+    #restart: always
     links:
       - taiga_rabbit
     ports:
@@ -196,6 +198,7 @@ services:
 #  taiga_celery:
 #    image: celery
 #    container_name: taiga_celery
+#    restart: always
 #    links:
 #      - taiga_rabbit
 #      - taiga_redis
