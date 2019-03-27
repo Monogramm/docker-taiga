@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 if [ ! -f /taiga/conf.json ]; then
   echo "Taiga frontend configuration missing!"
@@ -63,14 +64,14 @@ fi
 if [ -n "$TAIGA_DEFAULT_LANGUAGE" ]; then
   echo "Updating Taiga Front default language: $TAIGA_DEFAULT_LANGUAGE"
   sed -i \
-    -e "s|\"defaultLanguage\": \".*\",|\"defaultLanguage\": \"$TAIGA_DEFAULT_LANGUAGE\",|g" \
+    -e "s|\"defaultLanguage\": \".*\"|\"defaultLanguage\": \"$TAIGA_DEFAULT_LANGUAGE\"|g" \
     /taiga/conf.json
 fi
 
 if [ -n "$TAIGA_DEFAULT_THEME" ]; then
   echo "Updating Taiga Front default theme: $TAIGA_DEFAULT_THEME"
   sed -i \
-    -e "s|\"defaultTheme\": \".*\",|\"defaultTheme\": \"$TAIGA_DEFAULT_THEME\",|g" \
+    -e "s|\"defaultTheme\": \".*\"|\"defaultTheme\": \"$TAIGA_DEFAULT_THEME\"|g" \
     /taiga/conf.json
 fi
 
@@ -155,12 +156,12 @@ if [ -n "$TAIGA_CONTRIB_PLUGINS" ]; then
     plugins_list="$plugins_list \"/plugins/$plugin/$plugin.json\",";
   done
   sed -i \
-    -e "s|\"contribPlugins\": [.*],|\"contribPlugins\": [${plugins_list::-1}],|g" \
+    -e "s|\"contribPlugins\": [.*]|\"contribPlugins\": [${plugins_list::-1}]|g" \
     /taiga/conf.json
 else
   echo "Reset Taiga Front contribution plugins list"
   sed -i \
-    -e "s|\"contribPlugins\": [.*],|\"contribPlugins\": [],|g" \
+    -e "s|\"contribPlugins\": [.*]|\"contribPlugins\": []|g" \
     /taiga/conf.json
 fi
 
@@ -171,8 +172,8 @@ fi
 if [ -n "$TAIGA_GITLAB_AUTH_CLIENT_ID" ]; then
   echo "Updating Taiga Front GitLab client id and URL: $TAIGA_GITLAB_AUTH_URL - $TAIGA_GITLAB_AUTH_CLIENT_ID"
   sed -i \
-    -e "s|\"gitLabClientId\": \".*\",|\"gitLabClientId\": \"$TAIGA_GITLAB_AUTH_CLIENT_ID\",|g" \
-    -e "s|\"gitLabUrl\": \".*\",|\"gitLabUrl\": \"$TAIGA_GITLAB_AUTH_URL\",|g" \
+    -e "s|\"gitLabClientId\": \".*\"|\"gitLabClientId\": \"$TAIGA_GITLAB_AUTH_CLIENT_ID\"|g" \
+    -e "s|\"gitLabUrl\": \".*\"|\"gitLabUrl\": \"$TAIGA_GITLAB_AUTH_URL\"|g" \
     /taiga/conf.json
 fi
 
@@ -186,7 +187,7 @@ fi
 if [ -n "$TAIGA_GITHUB_AUTH_CLIENT_ID" ]; then
   echo "Updating Taiga Front GitHub client id: $TAIGA_GITHUB_AUTH_CLIENT_ID"
   sed -i \
-    -e "s|\"gitHubClientId\": \".*\",|\"gitHubClientId\": \"$TAIGA_GITHUB_AUTH_CLIENT_ID\",|g" \
+    -e "s|\"gitHubClientId\": \".*\"|\"gitHubClientId\": \"$TAIGA_GITHUB_AUTH_CLIENT_ID\"|g" \
     /taiga/conf.json
 fi
 
@@ -200,12 +201,12 @@ if [ -n "$TAIGA_IMPORTERS" ]; then
     importers_list="$importers_list \"$importer\",";
   done
   sed -i \
-    -e "s|\"importers\": [.*],|\"importers\": [${importers_list::-1}],|g" \
+    -e "s|\"importers\": [.*]|\"importers\": [${importers_list::-1}]|g" \
     /taiga/conf.json
 else
   echo "Reset Taiga Front importers list"
   sed -i \
-    -e "s|\"importers\": [.*],|\"importers\": [],|g" \
+    -e "s|\"importers\": [.*]|\"importers\": []|g" \
     /taiga/conf.json
 fi
 
@@ -219,12 +220,12 @@ fi
 if [ -n "$TAIGA_LOGIN_FORM_TYPE" ]; then
   echo "Updating Taiga Front login form type: $TAIGA_LOGIN_FORM_TYPE"
   sed -i \
-    -e "s|\"loginFormType\": .*,|\"loginFormType\": \"$TAIGA_LOGIN_FORM_TYPE\",|g" \
+    -e "s|\"loginFormType\": \".*\"|\"loginFormType\": \"$TAIGA_LOGIN_FORM_TYPE\"|g" \
     /taiga/conf.json
 else
   echo "Reset Taiga Front login form type"
   sed -i \
-    -e "s|\"loginFormType\": .*,|\"loginFormType\": \"normal\",|g" \
+    -e "s|\"loginFormType\": \".*\"|\"loginFormType\": \"normal\"|g" \
     /taiga/conf.json
 fi
 
