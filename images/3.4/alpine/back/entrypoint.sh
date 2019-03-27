@@ -31,7 +31,7 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
 
     if [ -n $TAIGA_ADMIN_PASSWORD ]; then
       echo "Changing initial admin password"
-      python manage.py shell < changeadminpasswd.py
+      python manage.py shell < /changeadminpasswd.py
     fi
 
 
