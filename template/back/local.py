@@ -57,7 +57,7 @@ if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
 ## LDAP
 #########################################
 
-if os.getenv('TAIGA_ENABLE_EMAIL').lower() == 'true':
+if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
     # see https://github.com/Monogramm/taiga-contrib-ldap-auth-ext
     print("Taiga contrib LDAP Auth Ext enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_ldap_auth_ext"]
