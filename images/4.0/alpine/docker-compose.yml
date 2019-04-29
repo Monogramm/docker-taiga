@@ -138,8 +138,8 @@ services:
       - TAIGA_TOS_URL=
       - TAIGA_GDPR_URL=
       - TAIGA_MAX_UPLOAD_SIZE=104857600
-      - TAIGA_CONTRIB_PLUGINS='slack cookie-warning'
-      #- TAIGA_CONTRIB_PLUGINS='slack cookie-warning gitlab-auth github-auth'
+      - TAIGA_CONTRIB_PLUGINS=slack cookie-warning
+      #- TAIGA_CONTRIB_PLUGINS=slack cookie-warning gitlab-auth github-auth
       - TAIGA_GRAVATAR=true
       - TAIGA_LOGIN_FORM_TYPE=ldap
       # Backend settings
