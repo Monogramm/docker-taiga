@@ -90,6 +90,10 @@ if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
     LDAP_EMAIL_ATTRIBUTE = os.getenv('TAIGA_LDAP_EMAIL_ATTRIBUTE')
     LDAP_FULL_NAME_ATTRIBUTE = os.getenv('TAIGA_LDAP_FULL_NAME_ATTRIBUTE')
 
+    # Option to not store the passwords in the local db
+    if os.getenv('TAIGA_LDAP_SAVE_LOGIN_PASSWORD').lower() == 'false':
+        LDAP_SAVE_LOGIN_PASSWORD = False
+
     # Fallback on normal authentication method if this LDAP auth fails. Uncomment to enable.
     LDAP_FALLBACK = os.getenv('TAIGA_LDAP_FALLBACK')
 

@@ -220,6 +220,8 @@ TAIGA_LDAP_BASE_DN=ou=People,dc=ldap,dc=company,dc=com
 TAIGA_LDAP_USERNAME_ATTRIBUTE=uid
 TAIGA_LDAP_EMAIL_ATTRIBUTE=mail
 TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
+# Disable passwords saved in DB on LDAP login
+TAIGA_LDAP_SAVE_LOGIN_PASSWORD=False
 # No fallback to local users (ie LDAP only)
 TAIGA_LDAP_FALLBACK=
 ```

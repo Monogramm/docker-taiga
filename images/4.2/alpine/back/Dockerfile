@@ -21,6 +21,7 @@ ENV TAIGA_ENABLE_SLACK=False \
     TAIGA_LDAP_USERNAME_ATTRIBUTE=uid \
     TAIGA_LDAP_EMAIL_ATTRIBUTE=mail \
     TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn \
+    TAIGA_LDAP_SAVE_LOGIN_PASSWORD=True \
     TAIGA_LDAP_FALLBACK=normal
 
 # Erase original entrypoint and conf with custom one
