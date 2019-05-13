@@ -132,7 +132,7 @@ services:
       - TAIGA_DEFAULT_LANGUAGE=en
       - TAIGA_DEFAULT_THEME=taiga
       - TAIGA_PUBLIC_REGISTER_ENABLED=false
-      - TAIGA_FEEDBACK_ENABLED=True
+      - TAIGA_FEEDBACK_ENABLED=true
       - TAIGA_SUPPORT_URL=https://tree.taiga.io/support
       - TAIGA_PRIVACY_POLICY_URL=
       - TAIGA_TOS_URL=
