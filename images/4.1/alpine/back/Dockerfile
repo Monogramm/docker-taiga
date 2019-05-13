@@ -1,6 +1,6 @@
 FROM monogramm/docker-taiga-back-base:4.1-alpine
 
-LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
+LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
 ENV TAIGA_ENABLE_SLACK=False \

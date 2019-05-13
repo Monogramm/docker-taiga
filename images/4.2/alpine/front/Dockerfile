@@ -1,6 +1,6 @@
 FROM monogramm/docker-taiga-front-base:4.2-alpine
 
-LABEL maintainer="Mathieu BRUNOT <mathieu.brunot at monogramm dot io>"
+LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
 ENV TAIGA_GITLAB_AUTH_CLIENT_ID= \
