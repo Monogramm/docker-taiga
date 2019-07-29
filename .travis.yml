@@ -15,7 +15,16 @@ before_script:
 
 script:
   - cd "$dir"
+  # Build container
   - docker-compose build
+  # Run container and wait to see they run
+  - travis_retry docker-compose up -d && sleep 60
+  - docker-compose ps
+  - docker-compose logs
+  - docker-compose ps "taiga_back" | grep "Up"
+  - docker-compose ps "taiga_front" | grep "Up"
+  # Drop containers and check they restart properly
+  - docker-compose down
   - travis_retry docker-compose up -d && sleep 60
   - docker-compose ps
   - docker-compose logs
