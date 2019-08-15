@@ -15,9 +15,11 @@ services:
       - POSTGRES_PASSWORD=${TAIGA_DB_PWD}
 
   taiga_back:
+    # For CI or local modifications
     build: ./back
+    # For production
     #image: monogramm/docker-taiga-back:4.1-alpine
-    hostname: taiga.${DOMAIN}
+    hostname: ${HOSTNAME}
     container_name: taiga_back
     #restart: always
     depends_on:
@@ -34,7 +36,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
     environment:
       # Your hostname (REQUIRED)
-      - TAIGA_HOSTNAME=taiga.${DOMAIN}
+      - TAIGA_HOSTNAME=${HOSTNAME}
       #- TAIGA_SSL=False
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
       # Secret key for cryptographic signing
@@ -98,9 +100,11 @@ services:
       - TAIGA_LDAP_FALLBACK=normal
 
   taiga_front:
+    # For CI or local modifications
     build: ./front
+    # For production
     #image: monogramm/docker-taiga-front:4.1-alpine
-    hostname: taiga.${DOMAIN}
+    hostname: ${HOSTNAME}
     container_name: taiga_front
     #restart: always
     depends_on:
@@ -123,9 +127,10 @@ services:
       - /etc/timezone:/etc/timezone:ro
     environment:
       # Your hostname (REQUIRED)
-      - TAIGA_HOSTNAME=taiga.${DOMAIN}
+      - TAIGA_HOSTNAME=${HOSTNAME}
       #- TAIGA_SSL=True
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
+      #- TAIGA_BACKEND_SSL=True
       # Frontend settings
       - TAIGA_DEBUG=false
       - TAIGA_DEBUG_INFO=false

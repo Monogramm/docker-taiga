@@ -49,12 +49,14 @@ if [ -z "$TAIGA_SKIP_DB_CHECK" ]; then
     #########################################
   fi
 
-  if python manage.py migrate --noinput | grep 'Your models have changes that are not yet reflected in a migration'; then
-    log "Generate database migrations..."
-    python manage.py makemigrations
-    log "Execute database migrations..."
-    python manage.py migrate --noinput
-  fi
+  # TODO This works... but requires to persist the backend to keep track of already executed migrations
+  # BREAKING CHANGES INCOMING
+  #if python manage.py migrate --noinput | grep 'Your models have changes that are not yet reflected in a migration'; then
+  #  log "Generate database migrations..."
+  #  python manage.py makemigrations
+  #  log "Execute database migrations..."
+  #  python manage.py migrate --noinput
+  #fi
 
 fi
 
@@ -64,4 +66,22 @@ python manage.py compilemessages > /dev/null
 python manage.py collectstatic --noinput > /dev/null
 
 log "Start gunicorn server"
-exec "$@"
+GUNICORN_TIMEOUT="${GUINCORN_TIMEOUT:-60}"
+GUNICORN_WORKERS="${GUNICORN_WORKERS:-4}"
+GUNICORN_LOGLEVEL="${GUNICORN_LOGLEVEL:-info}"
+
+GUNICORN_ARGS="--pythonpath=. -t ${GUNICORN_TIMEOUT} --workers ${GUNICORN_WORKERS} --bind ${BIND_ADDRESS}:${PORT} --log-level ${GUNICORN_LOGLEVEL}"
+
+if [ -n  "${GUNICORN_CERTFILE}" ]; then
+  GUNICORN_ARGS="${GUNICORN_ARGS} --certfile=${GUNICORN_CERTFILE}"
+fi
+
+if [ -n  "${GUNICORN_KEYFILE}" ]; then
+  GUNICORN_ARGS="${GUNICORN_ARGS} --keyfile=${GUNICORN_KEYFILE}"
+fi
+
+if [ "$1" == "gunicorn" ]; then
+  exec "$@" $GUNICORN_ARGS
+else
+  exec "$@"
+fi
