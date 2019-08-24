@@ -135,6 +135,7 @@ services:
       - TAIGA_DEBUG=false
       - TAIGA_DEBUG_INFO=false
       - TAIGA_DEFAULT_LANGUAGE=en
+      - TAIGA_THEMES=taiga material-design high-contrast
       - TAIGA_DEFAULT_THEME=taiga
       - TAIGA_PUBLIC_REGISTER_ENABLED=false
       - TAIGA_FEEDBACK_ENABLED=true
