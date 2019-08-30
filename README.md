@@ -204,9 +204,10 @@ TAIGA_LDAP_BASE_DN=ou=People,dc=ldap,dc=company,dc=com
 TAIGA_LDAP_USERNAME_ATTRIBUTE=uid
 TAIGA_LDAP_EMAIL_ATTRIBUTE=mail
 TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
-# Fallback to local users if login not found in LDAP
-TAIGA_LDAP_FALLBACK=norm
+# Fallback to local users if login not found in LDAP (default behavior)
+TAIGA_LDAP_FALLBACK=normal
 ```
+
 ```yml
 TAIGA_ENABLE_LDAP=True
 # LDAP over SSL
