@@ -3,8 +3,10 @@ FROM monogramm/docker-taiga-front-base:4.2-alpine
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
-ENV TAIGA_GITLAB_AUTH_CLIENT_ID= \
+ENV TAIGA_ENABLE_GITLAB_AUTH=False \
+    TAIGA_GITLAB_AUTH_CLIENT_ID= \
     TAIGA_GITLAB_AUTH_URL=https://gitlab.com \
+    TAIGA_ENABLE_GITHUB_AUTH=False \
     TAIGA_GITHUB_AUTH_CLIENT_ID=
 
 # Add custom init script to original entrypoint and custom conf
