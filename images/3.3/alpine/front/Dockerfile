@@ -3,15 +3,17 @@ FROM monogramm/docker-taiga-front-base:3.3-alpine
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
-ENV TAIGA_GITLAB_AUTH_CLIENT_ID= \
+ENV TAIGA_ENABLE_GITLAB_AUTH=False \
+    TAIGA_GITLAB_AUTH_CLIENT_ID= \
     TAIGA_GITLAB_AUTH_URL=https://gitlab.com \
+    TAIGA_ENABLE_GITHUB_AUTH=False \
     TAIGA_GITHUB_AUTH_CLIENT_ID=
 
-# Erase original entrypoint and conf with custom one
-COPY entrypoint.sh /
+# Add custom init script to original entrypoint and custom conf
+COPY custom_init.sh /
 COPY conf.json /taiga/
 
-# Fix entrypoint permissions
+# Set custom_init permissions
 # Replace original configuration file
 # Setup symbolic links for configuration files
 # Install Slack/Mattermost extension
@@ -19,7 +21,7 @@ COPY conf.json /taiga/
 # Install GitHub Auth extension
 # Install Cookie Warning extension
 RUN set -ex; \
-    chmod 755 /entrypoint.sh; \
+    chmod 755 /custom_init.sh; \
     SLACK_VERSION=$(curl -s https://pypi.org/pypi/taiga-contrib-slack/json \
         | grep -oE '"version":"[[:digit:]]+(\.[[:digit:]]+)?(\.[[:digit:]]+)?"' \
         | cut -d\" -f4); \
