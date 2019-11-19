@@ -42,7 +42,7 @@ if os.getenv('TAIGA_ENABLE_GITLAB_AUTH').lower() == 'true':
 #########################################
 
 if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
-    # see https://github.com/taigaio/taiga-contrib-gitlab-auth
+    # see https://github.com/taigaio/taiga-contrib-github-auth
     print("Taiga contrib GitHub Auth enabled", file=sys.stderr)
     INSTALLED_APPS += ["taiga_contrib_github_auth"]
 
