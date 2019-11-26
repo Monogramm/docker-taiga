@@ -26,6 +26,11 @@ script:
   - docker-compose ps "taiga_back" | grep "Up"
   - docker-compose logs "taiga_front"
   - docker-compose ps "taiga_front" | grep "Up"
+  # Test Front custom setup properly applied
+  - curl http://localhost/config.json
+  - curl http://localhost/config.json | grep 'gitlab-auth.json'
+  - curl http://localhost/config.json | grep 'github-auth.json'
+  - curl http://localhost/config.json | grep '"ldap"'
   # Test containers can be dropped and restarted
   - docker-compose down
   - docker-compose up -d && sleep 60
