@@ -1,9 +1,9 @@
 #!/bin/sh
 set -e
 
-log() {
-  echo "[$(date +%Y-%m-%dT%H:%M:%S%:z)] $@"
-}
+#log() {
+#  echo "[$(date +%Y-%m-%dT%H:%M:%S%:z)] $@"
+#}
 
 
 #########################################
@@ -13,7 +13,7 @@ log() {
 if [ "$TAIGA_ENABLE_GITLAB_AUTH" = "True" ]; then
   if ! echo "${TAIGA_CONTRIB_PLUGINS}" | grep 'gitlab-auth'; then
     log "Adding Taiga Front GitLab Auth to contrib plugins..."
-    TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} gitlab-auth"
+    export TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} gitlab-auth"
   else
     log "Taiga Front GitLab Auth enabled"
   fi
@@ -37,7 +37,7 @@ fi
 if [ "$TAIGA_ENABLE_GITHUB_AUTH" = "True" ]; then
   if ! echo "${TAIGA_CONTRIB_PLUGINS}" | grep 'github-auth'; then
     log "Adding Taiga Front GitHub Auth to contrib plugins..."
-    TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} github-auth"
+    export TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} github-auth"
   else
     log "Taiga Front GitHub Auth enabled"
   fi
