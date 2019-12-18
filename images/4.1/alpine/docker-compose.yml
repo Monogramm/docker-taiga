@@ -67,6 +67,7 @@ services:
       - TAIGA_EVENTS_ENABLED=True
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_VHOST='/'
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       # Async settings
@@ -188,6 +189,7 @@ services:
     environment:
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_VHOST='/'
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
