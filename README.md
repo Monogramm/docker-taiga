@@ -74,6 +74,7 @@ The front is based on [Monogramm/docker-taiga-front-base](https://github.com/Mon
 * https://github.com/taigaio/taiga-contrib-gitlab-auth
 * https://github.com/taigaio/taiga-contrib-github-auth
 * https://github.com/taigaio/taiga-contrib-cookie-warning
+* :construction: https://github.com/Monogramm/taiga-dark
 
 ### Frontend Auto configuration via environment variables
 
