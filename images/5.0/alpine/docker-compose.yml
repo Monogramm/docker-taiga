@@ -34,6 +34,7 @@ services:
       #- /srv/taiga/back/conf:/taiga
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
+      - ./back/root.cron:/etc/crontabs/root:ro
     environment:
       # Your hostname (REQUIRED)
       - TAIGA_HOSTNAME=${HOSTNAME}:${PORT}
