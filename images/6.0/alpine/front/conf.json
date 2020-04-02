@@ -28,5 +28,8 @@
     "enableAsanaImporter": false,
     "gravatar": true,
     "rtlLanguages": ["ar", "fa", "he"],
-    "loginFormType": "normal"
+    "loginFormType": "normal",
+    "openidAuth": "",
+    "openidName": "",
+    "openidClientId": ""
 }
