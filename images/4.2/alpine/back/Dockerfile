@@ -22,7 +22,13 @@ ENV TAIGA_ENABLE_SLACK=False \
     TAIGA_LDAP_EMAIL_ATTRIBUTE=mail \
     TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn \
     TAIGA_LDAP_SAVE_LOGIN_PASSWORD=True \
-    TAIGA_LDAP_FALLBACK=normal
+    TAIGA_LDAP_FALLBACK=normal \
+    TAIGA_ENABLE_OPENID_AUTH=False \
+    TAIGA_OPENID_AUTH_USER_URL= \
+    TAIGA_OPENID_AUTH_TOKEN_URL= \
+    TAIGA_OPENID_AUTH_CLIENT_ID= \
+    TAIGA_OPENID_AUTH_CLIENT_SECRET=
+
 
 # Erase original entrypoint and conf with custom one
 COPY entrypoint.sh /
@@ -32,12 +38,18 @@ COPY local.py /taiga/
 # Install Slack/Mattermost extension
 # Install GitLab Auth extension
 # Install LDAP extension
+# Install OPENID Auth extension
 RUN set -ex; \
     chmod 755 /entrypoint.sh; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-slack; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-gitlab-auth-official; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-github-auth; \
-    LC_ALL=C pip install --no-cache-dir taiga-contrib-ldap-auth-ext
+    LC_ALL=C pip install --no-cache-dir taiga-contrib-ldap-auth-ext; \
+    curl -L -o /tmp/taiga-contrib-openid-auth.zip "https://github.com/robrotheram/taiga-contrib-openid-auth/archive/master.zip"; \
+    mkdir -p /tmp/taiga-contrib-openid-auth; \
+    unzip /tmp/taiga-contrib-openid-auth.zip -d /tmp/; \
+    LC_ALL=C pip install --no-cache-dir /tmp/taiga-contrib-openid-auth-master/back; \
+    rm -rf /tmp/taiga-contrib-openid-auth
 
 # Backend healthcheck
 HEALTHCHECK CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1

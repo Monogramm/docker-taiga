@@ -54,6 +54,20 @@ if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
 
 
 #########################################
+## OpenID Connect
+#########################################
+
+if os.getenv('TAIGA_ENABLE_OPENID_AUTH').lower() == 'true':
+    print("Taiga contrib OPENID Auth enabled", file=sys.stderr)
+    INSTALLED_APPS += ["taiga_contrib_openid_auth"]
+
+    OPENID_USER_URL = os.getenv('TAIGA_OPENID_AUTH_USER_URL')
+    OPENID_TOKEN_URL = os.getenv('TAIGA_OPENID_AUTH_TOKEN_URL')
+    OPENID_CLIENT_ID = os.getenv('TAIGA_OPENID_AUTH_CLIENT_ID')
+    OPENID_CLIENT_SECRET = os.getenv('TAIGA_OPENID_AUTH_CLIENT_SECRET')
+
+
+#########################################
 ## LDAP
 #########################################
 
@@ -85,7 +99,7 @@ if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
     #LDAP_SEARCH_FILTER_ADDITIONAL = '(mail=*)'
 
     # Names of attributes to get username, e-mail and full name values from
-    # These fields need to have a value in LDAP 
+    # These fields need to have a value in LDAP
     LDAP_USERNAME_ATTRIBUTE = os.getenv('TAIGA_LDAP_USERNAME_ATTRIBUTE')
     LDAP_EMAIL_ATTRIBUTE = os.getenv('TAIGA_LDAP_EMAIL_ATTRIBUTE')
     LDAP_FULL_NAME_ATTRIBUTE = os.getenv('TAIGA_LDAP_FULL_NAME_ATTRIBUTE')
@@ -110,4 +124,3 @@ if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
 
     ## For additional configuration options, look at:
     # https://github.com/taigaio/taiga-back/blob/master/settings/local.py.example
-

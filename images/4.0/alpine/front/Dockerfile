@@ -7,7 +7,13 @@ ENV TAIGA_ENABLE_GITLAB_AUTH=False \
     TAIGA_GITLAB_AUTH_CLIENT_ID= \
     TAIGA_GITLAB_AUTH_URL=https://gitlab.com \
     TAIGA_ENABLE_GITHUB_AUTH=False \
-    TAIGA_GITHUB_AUTH_CLIENT_ID=
+    TAIGA_GITHUB_AUTH_CLIENT_ID= \
+    TAIGA_GITHUB_AUTH_CLIENT_ID= \
+    TAIGA_ENABLE_OPENID_AUTH=False \
+    TAIGA_OPENID_AUTH_AUTH_URL= \
+    TAIGA_OPENID_AUTH_CLIENT_ID= \
+    TAIGA_OPENID_AUTH_BUTTON_NAME="OpenID Connect"
+
 
 # Add custom init script to original entrypoint and custom conf
 COPY custom_init.sh /
@@ -19,6 +25,7 @@ COPY conf.json /taiga/
 # Install Slack/Mattermost extension
 # Install GitLab Auth extension
 # Install GitHub Auth extension
+# Install OIDC Auth extension
 # Install Cookie Warning extension
 RUN set -ex; \
     chmod 755 /custom_init.sh; \
@@ -51,6 +58,12 @@ RUN set -ex; \
     mv /tmp/taiga-contrib-github-auth-$GITHUB_AUTH_VERSION/front/dist \
         /usr/src/taiga-front-dist/dist/plugins/github-auth; \
     rm -rf /tmp/taiga-contrib-github-auth-$GITHUB_AUTH_VERSION; \
+    mkdir -p /usr/src/taiga-front-dist/dist/plugins/openid-auth; \
+    curl -L -o /tmp/taiga-contrib-openid-auth.zip "https://github.com/robrotheram/taiga-contrib-openid-auth/archive/master.zip"; \
+    mkdir -p /tmp/taiga-contrib-openid-auth; \
+    unzip /tmp/taiga-contrib-openid-auth.zip -d /tmp/; \
+    cp -R /tmp/taiga-contrib-openid-auth-master/front/dist/* /usr/src/taiga-front-dist/dist/plugins/openid-auth/; \
+    rm -rf /tmp/taiga-contrib-openid-auth; \
     COOKIE_WARNING_VERSION=stable; \
     echo "taiga-contrib-cookie-warning version: \"$COOKIE_WARNING_VERSION\""; \
     curl -L https://github.com/taigaio/taiga-contrib-cookie-warning/archive/$COOKIE_WARNING_VERSION.tar.gz \

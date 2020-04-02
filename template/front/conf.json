@@ -24,5 +24,8 @@
     "importers": [],
     "gravatar": true,
     "rtlLanguages": ["fa", "he"],
-    "loginFormType": "normal"
+    "loginFormType": "normal",
+    "openidAuth": "",
+    "openidName": "",
+    "openidClientId": ""
 }
