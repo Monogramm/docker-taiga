@@ -38,6 +38,3 @@ RUN set -ex; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-gitlab-auth-official; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-github-auth; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-ldap-auth-ext
-
-# Backend healthcheck
-HEALTHCHECK CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1
