@@ -40,7 +40,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
     environment:
       # Your hostname (REQUIRED)
-      - TAIGA_HOSTNAME=${HOSTNAME}
+      - TAIGA_HOSTNAME=${HOSTNAME}:${PORT}
       #- TAIGA_SSL=False
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
       # Secret key for cryptographic signing
@@ -71,6 +71,7 @@ services:
       - TAIGA_EVENTS_ENABLED=True
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_VHOST='/'
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       # Async settings
@@ -125,8 +126,9 @@ services:
       # To enable async mode, uncomment the following lines:
       #- taiga_redis
     ports:
-      - 80:80
-      - 443:443
+      # If using SSL, uncomment 443 and comment out 80
+      - ${PORT}:80
+      #- ${PORT}:443
     volumes:
       # Media and uploads directory. Required for NGinx
       - /srv/taiga/back/media:/usr/src/taiga-back/media:ro
@@ -137,7 +139,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
     environment:
       # Your hostname (REQUIRED)
-      - TAIGA_HOSTNAME=${HOSTNAME}
+      - TAIGA_HOSTNAME=${HOSTNAME}:${PORT}
       #- TAIGA_SSL=True
       #- TAIGA_SSL_BY_REVERSE_PROXY=True
       #- TAIGA_BACKEND_SSL=True
@@ -197,6 +199,7 @@ services:
     environment:
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_VHOST='/'
       - RABBIT_HOST=taiga_rabbit
       - RABBIT_PORT=5672
       - TAIGA_EVENTS_SECRET=${TAIGA_SECRET}
