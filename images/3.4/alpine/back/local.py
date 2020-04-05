@@ -85,7 +85,7 @@ if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
     #LDAP_SEARCH_FILTER_ADDITIONAL = '(mail=*)'
 
     # Names of attributes to get username, e-mail and full name values from
-    # These fields need to have a value in LDAP 
+    # These fields need to have a value in LDAP
     LDAP_USERNAME_ATTRIBUTE = os.getenv('TAIGA_LDAP_USERNAME_ATTRIBUTE')
     LDAP_EMAIL_ATTRIBUTE = os.getenv('TAIGA_LDAP_EMAIL_ATTRIBUTE')
     LDAP_FULL_NAME_ATTRIBUTE = os.getenv('TAIGA_LDAP_FULL_NAME_ATTRIBUTE')
@@ -110,4 +110,3 @@ if os.getenv('TAIGA_ENABLE_LDAP').lower() == 'true':
 
     ## For additional configuration options, look at:
     # https://github.com/taigaio/taiga-back/blob/master/settings/local.py.example
-
