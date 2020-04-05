@@ -1,9 +1,9 @@
 version: '2.2'
 
 services:
-  taigadb:
+  taiga_db:
     image: postgres:10-alpine
-    container_name: taigadb
+    container_name: taiga_db
     #restart: always
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "taiga"]
@@ -16,6 +16,20 @@ services:
       - POSTGRES_USER=taiga
       - POSTGRES_PASSWORD=${TAIGA_DB_PWD}
 
+  # Simple mail service for testing
+  taiga_mailer:
+    image: sj26/mailcatcher:latest
+    hostname: taiga_mailer
+    container_name: taiga_mailer
+    restart: always
+    expose:
+      - 1025
+    ports:
+      - 1080:1080
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
   taiga_back:
     # For CI or local modifications
     build: ./back
@@ -27,7 +41,7 @@ services:
     healthcheck:
       test: CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1
     depends_on:
-      - taigadb
+      - taiga_db
     ports:
       - 8001:8001
     volumes:
@@ -48,7 +62,7 @@ services:
       # Admin account default password
       - TAIGA_ADMIN_PASSWORD=${TAIGA_ADMIN_PASSWORD}
       # Database settings
-      - TAIGA_DB_HOST=taigadb
+      - TAIGA_DB_HOST=taiga_db
       - TAIGA_DB_NAME=taiga
       - TAIGA_DB_USER=taiga
       - TAIGA_DB_PASSWORD=${TAIGA_DB_PWD}
@@ -57,9 +71,14 @@ services:
       # To use an external SMTP for emails, fill in these values:
       - TAIGA_ENABLE_EMAIL=True
       - TAIGA_EMAIL_FROM=taiga@${TAIGA_EMAIL_DOMAIN}
-      - TAIGA_EMAIL_USE_TLS=True
-      - TAIGA_EMAIL_HOST=smtp.${TAIGA_EMAIL_DOMAIN}
-      - TAIGA_EMAIL_PORT=587
+      # Mailcatcher config for tests
+      - TAIGA_EMAIL_USE_TLS=False
+      - TAIGA_EMAIL_HOST=mailcatcher
+      - TAIGA_EMAIL_PORT=1025
+      # Sample production config
+      #- TAIGA_EMAIL_USE_TLS=True
+      #- TAIGA_EMAIL_HOST=smtp.${TAIGA_EMAIL_DOMAIN}
+      #- TAIGA_EMAIL_PORT=587
       - TAIGA_EMAIL_USER=${TAIGA_SMTP_USER}
       - TAIGA_EMAIL_PASS=${TAIGA_SMTP_PWD}
       # Backend settings
