@@ -1,23 +1,30 @@
+os: linux
 dist: trusty
-sudo: required
 
 services: docker
 
-language: bash
+language: shell
 
 branches:
   only:
     - master
     - develop
 
-before_script:
+before_install:
   - env | sort
-  - dir="images/${VERSION}/${VARIANT}"
+  - home="$(pwd)"
+  - travis_dir="${home}/images/${VERSION}/${VARIANT}"
 
-script:
-  - cd "$dir"
+install:
+  - cd "$travis_dir"
   # Test containers build
   - travis_retry docker-compose build
+
+before_script:
+  - docker images
+
+script:
+  - cd "$travis_dir"
   # Test containers run
   - docker-compose up -d && sleep 60
   - docker-compose ps
@@ -42,7 +49,6 @@ script:
   - docker-compose ps "taiga_front" | grep "Up"
 
 after_script:
-  - docker images
   - docker ps -a
 
 notifications:
