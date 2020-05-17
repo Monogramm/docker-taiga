@@ -34,10 +34,10 @@ script:
   - docker-compose logs "taiga_front"
   - docker-compose ps "taiga_front" | grep "Up"
   # TODO Test Front custom setup properly applied
-  #- curl http://localhost/config.json
-  #- curl http://localhost/config.json | grep 'gitlab-auth.json'
-  #- curl http://localhost/config.json | grep 'github-auth.json'
-  #- curl http://localhost/config.json | grep '"ldap"'
+  #- curl http://localhost:80/config.json
+  #- curl http://localhost:80/config.json | grep 'gitlab-auth.json'
+  #- curl http://localhost:80/config.json | grep 'github-auth.json'
+  #- curl http://localhost:80/config.json | grep '"ldap"'
   # Test containers can be dropped and restarted
   - docker-compose down
   - docker-compose up -d && sleep 60
@@ -55,7 +55,6 @@ notifications:
   email: false
 
 env: # Environments
-    - VERSION=3.4 VARIANT=alpine
     - VERSION=4.0 VARIANT=alpine
     - VERSION=4.1 VARIANT=alpine
     - VERSION=4.2 VARIANT=alpine
