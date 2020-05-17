@@ -1,23 +1,30 @@
+os: linux
 dist: trusty
-sudo: required
 
 services: docker
 
-language: bash
+language: shell
 
 branches:
   only:
     - master
     - develop
 
-before_script:
+before_install:
   - env | sort
-  - dir="images/${VERSION}/${VARIANT}"
+  - home="$(pwd)"
+  - travis_dir="${home}/images/${VERSION}/${VARIANT}"
 
-script:
-  - cd "$dir"
+install:
+  - cd "$travis_dir"
   # Test containers build
   - travis_retry docker-compose build
+
+before_script:
+  - docker images
+
+script:
+  - cd "$travis_dir"
   # Test containers run
   - docker-compose up -d && sleep 60
   - docker-compose ps
@@ -27,10 +34,10 @@ script:
   - docker-compose logs "taiga_front"
   - docker-compose ps "taiga_front" | grep "Up"
   # TODO Test Front custom setup properly applied
-  #- curl http://localhost/config.json
-  #- curl http://localhost/config.json | grep 'gitlab-auth.json'
-  #- curl http://localhost/config.json | grep 'github-auth.json'
-  #- curl http://localhost/config.json | grep '"ldap"'
+  #- curl http://localhost:80/config.json
+  #- curl http://localhost:80/config.json | grep 'gitlab-auth.json'
+  #- curl http://localhost:80/config.json | grep 'github-auth.json'
+  #- curl http://localhost:80/config.json | grep '"ldap"'
   # Test containers can be dropped and restarted
   - docker-compose down
   - docker-compose up -d && sleep 60
@@ -42,15 +49,12 @@ script:
   - docker-compose ps "taiga_front" | grep "Up"
 
 after_script:
-  - docker images
   - docker ps -a
 
 notifications:
   email: false
 
 env: # Environments
-    - VERSION=3.3 VARIANT=alpine
-    - VERSION=3.4 VARIANT=alpine
     - VERSION=4.0 VARIANT=alpine
     - VERSION=4.1 VARIANT=alpine
     - VERSION=4.2 VARIANT=alpine

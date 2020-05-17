@@ -59,10 +59,3 @@ RUN set -ex; \
     mv /tmp/taiga-contrib-cookie-warning-$COOKIE_WARNING_VERSION/dist \
         /usr/src/taiga-front-dist/dist/plugins/cookie-warning; \
     rm -rf /tmp/taiga-contrib-cookie-warning-$COOKIE_WARNING_VERSION
-
-# Frontend healthcheck
-HEALTHCHECK --interval=60s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl --fail http://localhost:80/conf.json \
-        && curl --fail http://localhost \
-        && curl --fail http://localhost/api/v1/ \
-        || exit 1

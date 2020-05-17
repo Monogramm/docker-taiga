@@ -10,7 +10,7 @@ variants=(
 	alpine
 )
 
-min_version='3.3'
+min_version='3.4'
 
 
 # version_greater_or_equal A B returns whether A >= B
