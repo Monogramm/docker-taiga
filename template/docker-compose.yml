@@ -5,10 +5,10 @@ services:
     image: postgres:10-alpine
     container_name: taiga_db
     #restart: always
+    ports:
+      - "5432:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "taiga"]
-    ports:
-      - 5432:5432
     volumes:
       - /srv/taiga/db/data:/var/lib/postgresql/data
     environment:
@@ -43,7 +43,7 @@ services:
     depends_on:
       - taiga_db
     ports:
-      - 8001:8001
+      - "8001:8001"
     volumes:
       # Media and uploads directory. Required (or you will lose all uploads)
       - /srv/taiga/back/media:/usr/src/taiga-back/media
@@ -146,8 +146,8 @@ services:
       #- taiga_redis
     ports:
       # If using SSL, uncomment 443 and comment out 80
-      - ${PORT}:80
-      #- ${PORT}:443
+      - "${PORT}:80"
+      #- "${PORT}:443"
     volumes:
       # Media and uploads directory. Required for NGinx
       - /srv/taiga/back/media:/usr/src/taiga-back/media:ro
@@ -202,7 +202,11 @@ services:
     container_name: taiga_rabbit
     #restart: always
     ports:
-      - 5672:5672
+      - "5672:5672"
+    healthcheck:
+      test: [ "CMD", "nc", "-z", "localhost", "5672" ]
+      timeout: 5s
+      retries: 1
     environment:
       - RABBITMQ_DEFAULT_USER=${TAIGA_RABBIT_USER}
       - RABBITMQ_DEFAULT_PASS=${TAIGA_RABBIT_PASSWORD}
@@ -213,8 +217,11 @@ services:
     #restart: always
     links:
       - taiga_rabbit
+    depends_on:
+      taiga_rabbit:
+        condition: service_healthy
     ports:
-      - 8888:8888
+      - "8888:8888"
     environment:
       - RABBIT_USER=${TAIGA_RABBIT_USER}
       - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
