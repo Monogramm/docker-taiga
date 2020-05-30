@@ -41,7 +41,8 @@ services:
     healthcheck:
       test: CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1
     depends_on:
-      - taiga_db
+      taigadb:
+        condition: service_healthy
     ports:
       - "8001:8001"
     volumes:
