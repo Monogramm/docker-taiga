@@ -139,12 +139,14 @@ services:
       #start_period: 5s
       retries: 4
     depends_on:
-      - taiga_back
+      - taiga_back:
+        condition: service_started
       # To disable taiga-events, comment the following lines:
-      - taiga_events
-      - taiga_rabbit
+      - taiga_events:
+        condition: service_started
       # To enable async mode, uncomment the following lines:
-      #- taiga_redis
+      #- taiga_redis:
+      #  condition: service_started
     ports:
       # If using SSL, uncomment 443 and comment out 80
       - "${PORT}:80"
@@ -216,11 +218,11 @@ services:
     image: monogramm/docker-taiga-events:alpine
     container_name: taiga_events
     #restart: always
-    links:
-      - taiga_rabbit
     depends_on:
       taiga_rabbit:
         condition: service_healthy
+    links:
+      - taiga_rabbit
     ports:
       - "8888:8888"
     environment:
