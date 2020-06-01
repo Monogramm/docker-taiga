@@ -45,7 +45,7 @@ services:
         condition: service_healthy
       # To enable async mode, uncomment the following lines:
       taiga_redis:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "8001:8001"
     volumes:
