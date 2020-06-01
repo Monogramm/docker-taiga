@@ -243,7 +243,7 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - /srv/taiga/redis/:/data
       - /etc/localtime:/etc/localtime:ro
