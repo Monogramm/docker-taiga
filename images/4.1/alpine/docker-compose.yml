@@ -41,7 +41,7 @@ services:
     healthcheck:
       test: curl --fail http://127.0.0.1:8001/api/v1/ | grep -q -e '"auth":' || exit 1
     depends_on:
-      taigadb:
+      taiga_db:
         condition: service_healthy
       # To enable async mode, uncomment the following lines:
       taiga_redis:
