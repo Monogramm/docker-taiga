@@ -43,6 +43,9 @@ services:
     depends_on:
       taigadb:
         condition: service_healthy
+        # To enable async mode, uncomment the following lines:
+        #taiga_redis:
+        #  condition: service_started
     ports:
       - "8001:8001"
     volumes:
@@ -139,14 +142,11 @@ services:
       #start_period: 5s
       retries: 4
     depends_on:
-      - taiga_back:
+      taiga_back:
         condition: service_started
       # To disable taiga-events, comment the following lines:
-      - taiga_events:
+      taiga_events:
         condition: service_started
-      # To enable async mode, uncomment the following lines:
-      #- taiga_redis:
-      #  condition: service_started
     ports:
       # If using SSL, uncomment 443 and comment out 80
       - "${PORT}:80"
