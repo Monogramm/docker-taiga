@@ -39,13 +39,13 @@ services:
     container_name: taiga_back
     #restart: always
     healthcheck:
-      test: CMD curl --fail http://127.0.0.1:8001/api/v1/ || exit 1
+      test: curl --fail http://127.0.0.1:8001/api/v1/ | grep -q -e '"auth":' || exit 1
     depends_on:
       taigadb:
         condition: service_healthy
-        # To enable async mode, uncomment the following lines:
-        #taiga_redis:
-        #  condition: service_started
+      # To enable async mode, uncomment the following lines:
+      taiga_redis:
+        condition: service_started
     ports:
       - "8001:8001"
     volumes:
@@ -75,6 +75,7 @@ services:
       # To use an external SMTP for emails, fill in these values:
       - TAIGA_ENABLE_EMAIL=True
       - TAIGA_EMAIL_FROM=taiga@${TAIGA_EMAIL_DOMAIN}
+      - TAIGA_NOTIFICATIONS_INTERVAL=300
       # Mailcatcher config for tests
       - TAIGA_EMAIL_USE_TLS=False
       - TAIGA_EMAIL_HOST=mailcatcher
@@ -99,9 +100,9 @@ services:
       - RABBIT_PORT=5672
       # Async settings
       # To enable async mode, uncomment the following lines:
-      #- TAIGA_ASYNC_ENABLED=True
-      #- REDIS_HOST=taiga_redis
-      #- REDIS_PORT=6379
+      - TAIGA_ASYNC_ENABLED=True
+      - REDIS_HOST=taiga_redis
+      - REDIS_PORT=6379
       ### Additional parameters
       # Slack
       - TAIGA_ENABLE_SLACK=True
@@ -136,7 +137,7 @@ services:
     container_name: taiga_front
     #restart: always
     healthcheck:
-      test: CMD curl --fail http://localhost:80/conf.json && curl --fail http://localhost && curl --fail http://localhost/api/v1/ || exit 1
+      test: curl --fail http://127.0.0.1:80/conf.json | grep -q -e '"api":' || exit 1
       interval: 60s
       timeout: 10s
       #start_period: 5s
@@ -235,24 +236,15 @@ services:
       - TAIGA_EVENTS_PORT=8888
 
   # To enable async mode, uncomment the following lines:
-#  taiga_redis:
-#    image: redis:4.0-alpine
-#    container_name: taiga_redis
-#    restart: always
-#    healthcheck:
-#      test: ["CMD", "redis-cli", "ping"]
-#    ports:
-#      - 6379:6379
-#    volumes:
-#      - /srv/taiga/redis/:/data
-#      - /etc/localtime:/etc/localtime:ro
-#      - /etc/timezone:/etc/timezone:ro
-#
-#  # FIXME Celery docker image is deprecated since 2017
-#  taiga_celery:
-#    image: celery
-#    container_name: taiga_celery
-#    restart: always
-#    links:
-#      - taiga_rabbit
-#      - taiga_redis
+  taiga_redis:
+    image: redis:4.0-alpine
+    container_name: taiga_redis
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    ports:
+      - 6379:6379
+    volumes:
+      - /srv/taiga/redis/:/data
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
