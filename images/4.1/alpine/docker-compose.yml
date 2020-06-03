@@ -183,7 +183,7 @@ services:
       - TAIGA_EMAIL_PORT=1025
       - TAIGA_EMAIL_USER=${TAIGA_SMTP_USER}
       - TAIGA_EMAIL_PASS=${TAIGA_SMTP_PWD}
-      # Backend settings
+      # Celery settings
       - TAIGA_TIMEZONE=${TAIGA_TIMEZONE}
       - TAIGA_DEBUG=False
       # Events settings
