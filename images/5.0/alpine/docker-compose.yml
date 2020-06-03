@@ -34,7 +34,7 @@ services:
     # For CI or local modifications
     build: ./back
     # For production
-    #image: monogramm/docker-taiga-back:5.0-alpine
+    image: monogramm/docker-taiga-back:5.0-alpine
     hostname: ${HOSTNAME}
     container_name: taiga_back
     #restart: always
@@ -45,7 +45,7 @@ services:
         condition: service_healthy
       # To enable async mode, uncomment the following lines:
       taiga_redis:
-        condition: service_started
+        condition: service_healthy
     ports:
       - "8001:8001"
     volumes:
@@ -128,6 +128,78 @@ services:
       - TAIGA_LDAP_FULL_NAME_ATTRIBUTE=displayName
       - TAIGA_LDAP_FALLBACK=normal
 
+  taiga_celery:
+    # For CI or local modifications
+    build: ./back
+    # For production
+    image: monogramm/docker-taiga-back:5.0-alpine
+    hostname: ${HOSTNAME}
+    container_name: taiga_celery
+    #restart: always
+    command: celery -A taiga worker --concurrency 4 -l INFO
+    healthcheck:
+      test: CMD celery -A taiga_back inspect ping --json | grep -q -e '"pong"'
+      interval: 60s
+      timeout: 10s
+      #start_period: 5s
+      retries: 4
+    depends_on:
+      taigadb:
+        condition: service_healthy
+      # To enable async mode, uncomment the following lines:
+      taiga_rabbit:
+        condition: service_healthy
+      taiga_redis:
+        condition: service_started
+    volumes:
+      # Media and uploads directory. Required (or you will lose all uploads)
+      - /srv/taiga/back/media:/usr/src/taiga-back/media
+      - /srv/taiga/back/static:/usr/src/taiga-back/static
+      # Taiga configuration directory. Makes it easier to change configuration with your own
+      #- /srv/taiga/back/conf:/taiga
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+    environment:
+      # Your hostname (REQUIRED)
+      - TAIGA_HOSTNAME=${HOSTNAME}:${PORT}
+      # Secret key for cryptographic signing
+      - TAIGA_SECRET_KEY=${TAIGA_SECRET}
+      # Admin account default password
+      - TAIGA_ADMIN_PASSWORD=${TAIGA_ADMIN_PASSWORD}
+      # Database settings
+      - TAIGA_SKIP_DB_CHECK=True
+      - TAIGA_DB_HOST=taigadb
+      - TAIGA_DB_NAME=taiga
+      - TAIGA_DB_USER=taiga
+      - TAIGA_DB_PASSWORD=${TAIGA_DB_PWD}
+      # when the db comes up from docker, it is usually too quick
+      - TAIGA_SLEEP=5
+      # To use an external SMTP for emails, fill in these values:
+      - TAIGA_ENABLE_EMAIL=True
+      - TAIGA_EMAIL_FROM=taiga@${TAIGA_EMAIL_DOMAIN}
+      - TAIGA_NOTIFICATIONS_INTERVAL=300
+      - TAIGA_EMAIL_USE_TLS=False
+      - TAIGA_EMAIL_HOST=mailcatcher
+      - TAIGA_EMAIL_PORT=1025
+      - TAIGA_EMAIL_USER=${TAIGA_SMTP_USER}
+      - TAIGA_EMAIL_PASS=${TAIGA_SMTP_PWD}
+      # Backend settings
+      - TAIGA_DEBUG=False
+      # Events settings
+      - TAIGA_EVENTS_ENABLED=True
+      - RABBIT_USER=${TAIGA_RABBIT_USER}
+      - RABBIT_PASSWORD=${TAIGA_RABBIT_PASSWORD}
+      - RABBIT_VHOST=/
+      - RABBIT_HOST=taiga_rabbit
+      - RABBIT_PORT=5672
+      # Async settings
+      # To enable async mode, uncomment the following lines:
+      - TAIGA_ASYNC_ENABLED=True
+      - REDIS_HOST=taiga_redis
+      - REDIS_PORT=6379
+      # FIXME Running a worker with superuser is a very bad idea!
+      - C_FORCE_ROOT=1
+
   taiga_front:
     # For CI or local modifications
     build: ./front
@@ -138,8 +210,8 @@ services:
     #restart: always
     healthcheck:
       test: curl --fail http://127.0.0.1:80/conf.json | grep -q -e '"api":' || exit 1
-      interval: 60s
-      timeout: 10s
+      interval: 30s
+      timeout: 5s
       #start_period: 5s
       retries: 4
     depends_on:
