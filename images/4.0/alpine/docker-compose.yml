@@ -144,7 +144,7 @@ services:
       #start_period: 5s
       retries: 4
     depends_on:
-      taigadb:
+      taiga_db:
         condition: service_healthy
       # To enable async mode, uncomment the following lines:
       taiga_rabbit:
@@ -168,7 +168,7 @@ services:
       - TAIGA_ADMIN_PASSWORD=${TAIGA_ADMIN_PASSWORD}
       # Database settings
       - TAIGA_SKIP_DB_CHECK=True
-      - TAIGA_DB_HOST=taigadb
+      - TAIGA_DB_HOST=taiga_db
       - TAIGA_DB_NAME=taiga
       - TAIGA_DB_USER=taiga
       - TAIGA_DB_PASSWORD=${TAIGA_DB_PWD}
