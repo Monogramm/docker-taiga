@@ -31,6 +31,8 @@ script:
   #- docker-compose logs
   - docker-compose logs "taiga_back"
   - docker-compose ps "taiga_back" | grep "Up"
+  - docker-compose logs "taiga_celery"
+  - docker-compose ps "taiga_celery" | grep "Up"
   - docker-compose logs "taiga_front"
   - docker-compose ps "taiga_front" | grep "Up"
   # TODO Test Front custom setup properly applied
@@ -45,6 +47,8 @@ script:
   #- docker-compose logs
   - docker-compose logs "taiga_back"
   - docker-compose ps "taiga_back" | grep "Up"
+  - docker-compose logs "taiga_celery"
+  - docker-compose ps "taiga_celery" | grep "Up"
   - docker-compose logs "taiga_front"
   - docker-compose ps "taiga_front" | grep "Up"
 
