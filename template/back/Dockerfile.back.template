@@ -25,15 +25,15 @@ ENV TAIGA_ENABLE_SLACK=False \
     TAIGA_LDAP_FALLBACK=normal
 
 # Erase original entrypoint and conf with custom one
-COPY entrypoint.sh /
+COPY custom_db_init.sh /
 COPY local.py /taiga/
 
-# Fix entrypoint permissions
+# Fix custom_db_init permissions
 # Install Slack/Mattermost extension
 # Install GitLab Auth extension
 # Install LDAP extension
 RUN set -ex; \
-    chmod 755 /entrypoint.sh; \
+    chmod 755 /custom_db_init.sh; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-slack; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-gitlab-auth-official; \
     LC_ALL=C pip install --no-cache-dir taiga-contrib-github-auth; \

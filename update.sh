@@ -48,7 +48,7 @@ for latest in "${latests[@]}"; do
                 tgt="$dir/$image"
                 mkdir -p "$tgt"
 
-                template="Dockerfile-$image.template"
+                template="Dockerfile.$image.template"
                 cp "template/$image/$template" "$tgt/Dockerfile"
 
                 # Replace the variables.
@@ -67,7 +67,7 @@ for latest in "${latests[@]}"; do
                 if [[ $1 == 'build' ]]; then
                     tag="$version-$variant"
                     echo "Build Dockerfile for ${tag}"
-                    docker build -t ${dockerRepo}:${tag} "$tgt"
+                    docker build -t "${dockerRepo}:${tag}" "$tgt"
                 fi
             done
 
