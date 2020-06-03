@@ -184,6 +184,7 @@ services:
       - TAIGA_EMAIL_USER=${TAIGA_SMTP_USER}
       - TAIGA_EMAIL_PASS=${TAIGA_SMTP_PWD}
       # Backend settings
+      - TAIGA_TIMEZONE=${TAIGA_TIMEZONE}
       - TAIGA_DEBUG=False
       # Events settings
       - TAIGA_EVENTS_ENABLED=True
