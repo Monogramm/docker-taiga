@@ -1,4 +1,4 @@
-FROM monogramm/docker-taiga-back-base:4.1-alpine
+FROM monogramm/docker-taiga-back-base:5.5-alpine
 
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
