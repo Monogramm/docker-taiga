@@ -34,7 +34,7 @@ services:
     # For CI or local modifications
     build: ./back
     # For production
-    image: monogramm/docker-taiga-back:4.1-alpine
+    image: monogramm/docker-taiga-back:5.5-alpine
     hostname: ${HOSTNAME}
     container_name: taiga_back
     #restart: always
@@ -132,13 +132,13 @@ services:
     # For CI or local modifications
     build: ./back
     # For production
-    image: monogramm/docker-taiga-back:4.1-alpine
+    image: monogramm/docker-taiga-back:5.5-alpine
     hostname: ${HOSTNAME}
     container_name: taiga_celery
     #restart: always
     command: celery -A taiga worker --concurrency 4 -l INFO
     healthcheck:
-      test: CMD celery -A taiga_back inspect ping --json | grep -q -e '"pong"'
+      test: celery -A taiga inspect ping --json | grep -q -e '"pong"' || exit 1
       interval: 60s
       timeout: 10s
       #start_period: 5s
@@ -205,7 +205,7 @@ services:
     # For CI or local modifications
     build: ./front
     # For production
-    #image: monogramm/docker-taiga-front:4.1-alpine
+    #image: monogramm/docker-taiga-front:5.5-alpine
     hostname: ${HOSTNAME}
     container_name: taiga_front
     #restart: always
