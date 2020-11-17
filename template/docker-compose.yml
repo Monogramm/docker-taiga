@@ -30,6 +30,19 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /etc/timezone:/etc/timezone:ro
 
+  # Simple LDAP service for testing
+  taiga_ldap:
+    image: rroemhild/test-openldap:latest
+    hostname: taiga_ldap
+    container_name: taiga_ldap
+    restart: always
+    expose:
+      - 389
+      - 636
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
   taiga_back:
     # For CI or local modifications
     build: ./back
@@ -78,7 +91,7 @@ services:
       - TAIGA_NOTIFICATIONS_INTERVAL=300
       # Mailcatcher config for tests
       - TAIGA_EMAIL_USE_TLS=False
-      - TAIGA_EMAIL_HOST=mailcatcher
+      - TAIGA_EMAIL_HOST=taiga_mailer
       - TAIGA_EMAIL_PORT=1025
       # Sample production config
       #- TAIGA_EMAIL_USE_TLS=True
@@ -117,9 +130,9 @@ services:
       - TAIGA_GITHUB_AUTH_CLIENT_SECRET=${TAIGA_GITHUB_AUTH_CLIENT_SECRET}
       # LDAP Settings
       - TAIGA_ENABLE_LDAP=${TAIGA_ENABLE_LDAP}
-      - TAIGA_LDAP_USE_TLS=True
       - TAIGA_LDAP_SERVER=ldap://${TAIGA_LDAP_DOMAIN}
       - TAIGA_LDAP_PORT=389
+      - TAIGA_LDAP_USE_TLS=False
       - TAIGA_LDAP_BIND_DN=${TAIGA_LDAP_BIND_DN}
       - TAIGA_LDAP_BIND_PASSWORD=${TAIGA_LDAP_BIND_PASSWORD}
       - TAIGA_LDAP_BASE_DN=${TAIGA_LDAP_BASE_DN}
