@@ -25,7 +25,7 @@ This Docker repository provides custom [taiga-front](https://github.com/taigaio/
 
 These images were inspired by [ajira86/docker-taiga](https://github.com/ajira86/docker-taiga) which is a fork of [benhutchins/docker-taiga](https://github.com/benhutchins/docker-taiga).
 
-## What is Taiga?
+## What is Taiga
 
 Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
 
@@ -37,9 +37,18 @@ Taiga is a project management platform for startups and agile developers & desig
 
 > [docker-taiga-back](https://hub.docker.com/r/monogramm/docker-taiga-back/)
 
--   `4.2`, `4.2-alpine`, `4`, `4-alpine`
--   `5.0`, `5.0-alpine`
--   `5.5`, `5.5-alpine`, `5`, `5-alpine`, `alpine`, `latest`
+<!-- >Docker Tags -->
+
+-   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/front/Dockerfile`)
+-   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/back/Dockerfile`)
+-   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/front/Dockerfile`)
+-   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/back/Dockerfile`)
+-   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/front/Dockerfile`)
+-   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/back/Dockerfile`)
+-   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/front/Dockerfile`)
+-   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/back/Dockerfile`)
+
+<!-- <Docker Tags -->
 
 ## Build Docker-compose
 

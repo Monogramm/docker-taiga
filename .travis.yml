@@ -1,5 +1,5 @@
 os: linux
-dist: trusty
+dist: bionic
 
 services: docker
 
@@ -7,50 +7,55 @@ language: shell
 
 branches:
   only:
-    - master
     - develop
+    - master
+    - main
 
 before_install:
   - env | sort
-  - home="$(pwd)"
-  - travis_dir="${home}/images/${VERSION}/${VARIANT}"
+  - travis_dir="$(pwd)/images/${VERSION}/${VARIANT}"
 
 install:
   - cd "$travis_dir"
+  # Execute CI build hooks
+  - ./hooks/run build
   # Test containers build
-  - travis_retry docker-compose build
+  #- travis_retry docker-compose build
 
 before_script:
+  # Display docker images
   - docker images
 
 script:
   - cd "$travis_dir"
+  # Execute CI test hooks
+  - ./hooks/run test
   # Test containers run
-  - docker-compose up -d && sleep 60
-  - docker-compose ps
-  #- docker-compose logs
-  - docker-compose logs "taiga_back"
-  - docker-compose ps "taiga_back" | grep "Up"
-  - docker-compose logs "taiga_celery"
-  - docker-compose ps "taiga_celery" | grep "Up"
-  - docker-compose logs "taiga_front"
-  - docker-compose ps "taiga_front" | grep "Up"
-  # TODO Test Front custom setup properly applied
-  #- curl http://localhost:80/config.json
-  #- curl http://localhost:80/config.json | grep 'gitlab-auth.json'
-  #- curl http://localhost:80/config.json | grep 'github-auth.json'
-  #- curl http://localhost:80/config.json | grep '"ldap"'
-  # Test containers can be dropped and restarted
-  - docker-compose down
-  - docker-compose up -d && sleep 60
-  - docker-compose ps
-  #- docker-compose logs
-  - docker-compose logs "taiga_back"
-  - docker-compose ps "taiga_back" | grep "Up"
-  - docker-compose logs "taiga_celery"
-  - docker-compose ps "taiga_celery" | grep "Up"
-  - docker-compose logs "taiga_front"
-  - docker-compose ps "taiga_front" | grep "Up"
+  #- docker-compose up -d && sleep 60
+  #- docker-compose ps
+  ##- docker-compose logs
+  #- docker-compose logs "taiga_back"
+  #- docker-compose ps "taiga_back" | grep "Up"
+  #- docker-compose logs "taiga_celery"
+  #- docker-compose ps "taiga_celery" | grep "Up"
+  #- docker-compose logs "taiga_front"
+  #- docker-compose ps "taiga_front" | grep "Up"
+  ## TODO Test Front custom setup properly applied
+  ##- curl http://localhost:80/config.json
+  ##- curl http://localhost:80/config.json | grep 'gitlab-auth.json'
+  ##- curl http://localhost:80/config.json | grep 'github-auth.json'
+  ##- curl http://localhost:80/config.json | grep '"ldap"'
+  ## Test containers can be dropped and restarted
+  #- docker-compose down
+  #- docker-compose up -d && sleep 60
+  #- docker-compose ps
+  ##- docker-compose logs
+  #- docker-compose logs "taiga_back"
+  #- docker-compose ps "taiga_back" | grep "Up"
+  #- docker-compose logs "taiga_celery"
+  #- docker-compose ps "taiga_celery" | grep "Up"
+  #- docker-compose logs "taiga_front"
+  #- docker-compose ps "taiga_front" | grep "Up"
 
 after_script:
   - docker ps -a
@@ -62,3 +67,4 @@ env: # Environments
     - VERSION=4.2 VARIANT=alpine
     - VERSION=5.0 VARIANT=alpine
     - VERSION=5.5 VARIANT=alpine
+    - VERSION=6.0 VARIANT=alpine

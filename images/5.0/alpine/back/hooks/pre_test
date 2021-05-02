@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# See documentation for details:
+# https://docs.docker.com/docker-hub/builds/advanced/
+
+#echo 'Preparing persisted data...'
+#mkdir -p \
+#    "/srv/taiga/front/conf" \
+#    "/srv/taiga/back/media" \
+#    "/srv/taiga/back/static" \
+#    "/srv/taiga/back/conf" \
+#    "/srv/taiga/postgres/data" \
+#    "/srv/taiga/redis/data"
+#chown 777 \
+#    "/srv/taiga/front/conf" \
+#    "/srv/taiga/back/media" \
+#    "/srv/taiga/back/static" \
+#    "/srv/taiga/back/conf" \
+#    "/srv/taiga/postgres/data" \
+#    "/srv/taiga/redis/data"
