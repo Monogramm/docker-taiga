@@ -10,7 +10,7 @@
 
 from .docker import *
 from ldap3 import Tls
-import ssl
+import os, sys, ssl
 
 #########################################
 ## SLACK

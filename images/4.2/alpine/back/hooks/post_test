@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# See documentation for details:
+# https://docs.docker.com/docker-hub/builds/advanced/
+
+#echo 'Removing persisted data...'
+#rm -rf \
+#    "/srv/taiga/front/conf" \
+#    "/srv/taiga/back/media" \
+#    "/srv/taiga/back/static" \
+#    "/srv/taiga/back/conf" \
+#    "/srv/taiga/postgres/data" \
+#    "/srv/taiga/redis/data"

@@ -1,0 +1,32 @@
+
+name: Docker Image CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: ['4.2', '5.0', '5.5', '6.0', ]
+        variant: ['alpine']
+        image: ['front', 'back']
+
+    steps:
+      - name: Check Out Repo
+        uses: actions/checkout@v2
+
+      - name: Execute CI hooks
+        id: docker_build
+        run: |
+          cd ./images/${{ matrix.version }}/${{ matrix.variant }}/${{ matrix.image }}
+          ./hooks/run
+
+      - name: Display docker images
+        run: docker images

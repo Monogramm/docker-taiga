@@ -59,3 +59,32 @@ RUN set -ex; \
     mv "/tmp/taiga-contrib-cookie-warning-$COOKIE_WARNING_VERSION/dist" \
         /usr/src/taiga-front-dist/dist/plugins/cookie-warning; \
     rm -rf "/tmp/taiga-contrib-cookie-warning-$COOKIE_WARNING_VERSION"
+
+# Arguments to label built container
+ARG VCS_REF=unknown
+ARG BUILD_DATE=unknown
+ARG VERSION=5.5
+
+# Container labels (http://label-schema.org/)
+# Container annotations (https://github.com/opencontainers/image-spec)
+LABEL maintainer="Monogramm Maintainers <opensource at monogramm dot io>" \
+      product="Taiga Front" \
+      version=$VERSION \
+      org.label-schema.vcs-ref=$VCS_REF \
+      org.label-schema.vcs-url="https://github.com/Monogramm/docker-taiga/" \
+      org.label-schema.build-date=$BUILD_DATE \
+      org.label-schema.name="Taiga Front" \
+      org.label-schema.description="Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable." \
+      org.label-schema.url="https://www.taiga.io/" \
+      org.label-schema.vendor="Taiga" \
+      org.label-schema.version=$VERSION \
+      org.label-schema.schema-version="1.0" \
+      org.opencontainers.image.revision=$VCS_REF \
+      org.opencontainers.image.source="https://github.com/Monogramm/docker-taiga/" \
+      org.opencontainers.image.created=$BUILD_DATE \
+      org.opencontainers.image.title="Taiga Front" \
+      org.opencontainers.image.description="Taiga is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable." \
+      org.opencontainers.image.url="https://www.taiga.io/" \
+      org.opencontainers.image.vendor="Taiga" \
+      org.opencontainers.image.version=$VERSION \
+      org.opencontainers.image.authors="Monogramm Maintainers <opensource at monogramm dot io>"
