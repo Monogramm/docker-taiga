@@ -47,7 +47,6 @@ githubEnv=
 travisEnv=
 for latest in "${latests[@]}"; do
     version=$(echo "$latest" | cut -d. -f1-2)
-    major=$(echo "$latest" | cut -d. -f1-1)
 
     # Only add versions >= "$min_version"
     if version_greater_or_equal "$version" "$min_version"; then
