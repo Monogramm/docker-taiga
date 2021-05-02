@@ -73,6 +73,7 @@ The front is based on [Monogramm/docker-taiga-front-base](https://github.com/Mon
 -   <https://github.com/taigaio/taiga-contrib-gitlab-auth>
 -   <https://github.com/taigaio/taiga-contrib-github-auth>
 -   <https://github.com/taigaio/taiga-contrib-cookie-warning>
+-   <https://github.com/robrotheram/taiga-contrib-openid-auth>
 
 ### Frontend Auto configuration via environment variables
 
@@ -122,6 +123,20 @@ Examples:
 TAIGA_GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
 ```
 
+#### TAIGA_OPENID_AUTH_CLIENT_ID
+
+_Default value_: 
+
+OpenID Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=openid-auth` too.
+
+Examples:
+
+```yml
+TAIGA_OPENID_AUTH_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
+TAIGA_OPENID_AUTH_NAME=Client_ID
+TAIGA_OPENID_AUTH_CLIENT_ID=Name_you_want_to_give_your_openid_provider_eg_keycloak
+```
+
 ## Backend
 
 The image is based on [Monogramm/docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base) and add the following plugins:
@@ -130,6 +145,7 @@ The image is based on [Monogramm/docker-taiga-back-base](https://github.com/Mono
 -   <https://github.com/taigaio/taiga-contrib-gitlab-auth>
 -   <https://github.com/taigaio/taiga-contrib-github-auth>
 -   <https://github.com/Monogramm/taiga-contrib-ldap-auth-ext>
+-   <https://github.com/robrotheram/taiga-contrib-openid-auth>
 
 ### Backend Auto configuration via environment variables
 
@@ -235,6 +251,26 @@ TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
 TAIGA_LDAP_SAVE_LOGIN_PASSWORD=False
 # No fallback to local users (ie LDAP only)
 TAIGA_LDAP_FALLBACK=
+```
+
+#### TAIGA_ENABLE_OPENID_AUTH
+
+_Default value_: `False`
+
+Enable Taiga OpenID Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=openid-auth` and `TAIGA_OPENID_AUTH_URL` / `TAIGA_OPENID_AUTH_NAME` / `TAIGA_OPENID_AUTH_CLIENT_ID` in the frontend too.
+
+Examples:
+
+```yml
+TAIGA_ENABLE_OPENID_AUTH=False
+```
+
+```yml
+TAIGA_ENABLE_OPENID_AUTH=True
+TAIGA_OPENID_AUTH_USER_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
+TAIGA_OPENID_AUTH_TOKEN_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/token
+TAIGA_OPENID_AUTH_CLIENT_ID=Client_ID
+TAIGA_OPENID_AUTH_CLIENT_SECRET=Client_SECRET
 ```
 
 [uri_license]: http://www.gnu.org/licenses/agpl.html

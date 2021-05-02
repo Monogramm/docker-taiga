@@ -51,3 +51,31 @@ if [ -n "${TAIGA_GITHUB_AUTH_CLIENT_ID}" ]; then
 fi
 
 #########################################
+
+
+#########################################
+## OpenID Connect
+#########################################
+
+if [ "${TAIGA_ENABLE_OPENID_AUTH:-$ENABLE_OPENID}" = "True" ]; then
+  if ! echo "${TAIGA_CONTRIB_PLUGINS}" | grep 'openid-auth'; then
+    log "Adding Taiga Front OIDC Auth to contrib plugins..."
+    export TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} openid-auth"
+  else
+    log "Taiga Front OIDC Auth enabled"
+  fi
+fi
+
+if [ -n "${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}" ]; then
+  log "Updating Taiga Front OIDC Auth client id: ${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}"
+  sed -i \
+    -e "/openidAuth/c\    \"openidAuth\" : \"${TAIGA_OPENID_AUTH_URL:-$OPENID_URL}\"," \
+    -e "/openidName/c\    \"openidName\" : \"${TAIGA_OPENID_AUTH_NAME:-$OPENID_NAME}\"," \
+    -e "/openidClientId/c\    \"openidClientId\" : \"${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}\"," \
+    /taiga/conf.json
+fi
+
+#########################################
+
+# Remove any trailing commas
+sed -i.bak ':begin;$!N;s/,\n}/\n}/g;tbegin;P;D' /taiga/conf.json

@@ -54,6 +54,20 @@ if os.getenv('TAIGA_ENABLE_GITHUB_AUTH').lower() == 'true':
 
 
 #########################################
+## OpenID Connect
+#########################################
+
+if os.getenv('TAIGA_ENABLE_OPENID_AUTH', os.getenv('ENABLE_OPENID', 'False')).lower() == 'true':
+    print("Taiga contrib OpenID Auth enabled", file=sys.stderr)
+    INSTALLED_APPS += ["taiga_contrib_openid_auth"]
+
+    OPENID_USER_URL = os.getenv('TAIGA_OPENID_AUTH_USER_URL', os.getenv('OPENID_USER_URL'))
+    OPENID_TOKEN_URL = os.getenv('TAIGA_OPENID_AUTH_TOKEN_URL', os.getenv('OPENID_TOKEN_URL'))
+    OPENID_CLIENT_ID = os.getenv('TAIGA_OPENID_AUTH_CLIENT_ID', os.getenv('OPENID_CLIENT_ID'))
+    OPENID_CLIENT_SECRET = os.getenv('TAIGA_OPENID_AUTH_CLIENT_SECRET', os.getenv('OPENID_CLIENT_SECRET'))
+
+
+#########################################
 ## LDAP
 #########################################
 
