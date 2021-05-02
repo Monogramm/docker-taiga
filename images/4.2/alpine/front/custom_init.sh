@@ -57,7 +57,7 @@ fi
 ## OpenID Connect
 #########################################
 
-if [ "$TAIGA_ENABLE_OIDC_AUTH" = "True" ]; then
+if [ "${TAIGA_ENABLE_OPENID_AUTH:-$ENABLE_OPENID}" = "True" ]; then
   if ! echo "${TAIGA_CONTRIB_PLUGINS}" | grep 'openid-auth'; then
     log "Adding Taiga Front OIDC Auth to contrib plugins..."
     export TAIGA_CONTRIB_PLUGINS="${TAIGA_CONTRIB_PLUGINS} openid-auth"
@@ -66,12 +66,12 @@ if [ "$TAIGA_ENABLE_OIDC_AUTH" = "True" ]; then
   fi
 fi
 
-if [ -n "$TAIGA_OIDC_AUTH_CLIENT_ID" ]; then
-  log "Updating Taiga Front OIDC Auth client id: $TAIGA_OIDC_AUTH_CLIENT_ID"
+if [ -n "${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}" ]; then
+  log "Updating Taiga Front OIDC Auth client id: ${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}"
   sed -i \
-    -e "/openidAuth/c\    \"openidAuth\" : \"$TAIGA_OIDC_AUTH_AUTH_URL\"," \
-    -e "/openidName/c\    \"openidName\" : \"$TAIGA_OIDC_AUTH_BUTTON_NAME\"," \
-    -e "/openidClientId/c\    \"openidClientId\" : \"$TAIGA_OIDC_AUTH_CLIENT_ID\"," \
+    -e "/openidAuth/c\    \"openidAuth\" : \"${TAIGA_OPENID_AUTH_URL:-$OPENID_URL}\"," \
+    -e "/openidName/c\    \"openidName\" : \"${TAIGA_OPENID_AUTH_NAME:-$OPENID_NAME}\"," \
+    -e "/openidClientId/c\    \"openidClientId\" : \"${TAIGA_OPENID_AUTH_CLIENT_ID:-$OPENID_CLIENT_ID}\"," \
     /taiga/conf.json
 fi
 
