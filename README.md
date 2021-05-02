@@ -5,8 +5,6 @@
 
 [![Front Docker Automated buid](https://img.shields.io/docker/cloud/build/monogramm/docker-taiga-front.svg)](https://hub.docker.com/r/monogramm/docker-taiga-front/)
 [![Front Docker Pulls](https://img.shields.io/docker/pulls/monogramm/docker-taiga-front.svg)](https://hub.docker.com/r/monogramm/docker-taiga-front/)
-[![](https://images.microbadger.com/badges/version/monogramm/docker-taiga-front.svg)](https://microbadger.com/images/monogramm/docker-taiga-front)
-[![](https://images.microbadger.com/badges/image/monogramm/docker-taiga-front.svg)](https://microbadger.com/images/monogramm/docker-taiga-front)
 
 * * *
 
@@ -14,8 +12,6 @@
 
 [![Back Docker Automated buid](https://img.shields.io/docker/cloud/build/monogramm/docker-taiga-back.svg)](https://hub.docker.com/r/monogramm/docker-taiga-back/)
 [![Back Docker Pulls](https://img.shields.io/docker/pulls/monogramm/docker-taiga-back.svg)](https://hub.docker.com/r/monogramm/docker-taiga-back/)
-[![](https://images.microbadger.com/badges/version/monogramm/docker-taiga-back.svg)](https://microbadger.com/images/monogramm/docker-taiga-back)
-[![](https://images.microbadger.com/badges/image/monogramm/docker-taiga-back.svg)](https://microbadger.com/images/monogramm/docker-taiga-back)
 
 * * *
 
@@ -33,20 +29,20 @@ Taiga is a project management platform for startups and agile developers & desig
 
 ## Supported tags
 
-> [docker-taiga-front](https://hub.docker.com/r/monogramm/docker-taiga-front/)
+> [monogramm/docker-taiga-front](https://hub.docker.com/r/monogramm/docker-taiga-front/)
 
-> [docker-taiga-back](https://hub.docker.com/r/monogramm/docker-taiga-back/)
+> [monogramm/docker-taiga-back](https://hub.docker.com/r/monogramm/docker-taiga-back/)
 
 <!-- >Docker Tags -->
 
--   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/front/Dockerfile`)
--   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/back/Dockerfile`)
--   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/front/Dockerfile`)
--   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/back/Dockerfile`)
--   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/front/Dockerfile`)
--   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/back/Dockerfile`)
--   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/front/Dockerfile`)
--   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/back/Dockerfile`)
+-   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/front/Dockerfile`) ![Docker Image Size (6.0.10-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-front/6.0.10-alpine)
+-   6.0.10-alpine 6.0-alpine alpine 6.0.10 6.0 latest  (`images/6.0/alpine/back/Dockerfile`) ![Docker Image Size (6.0.10-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-back/6.0.10-alpine)
+-   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/front/Dockerfile`) ![Docker Image Size (5.5.10-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-front/5.5.10-alpine)
+-   5.5.10-alpine 5.5-alpine 5.5.10 5.5  (`images/5.5/alpine/back/Dockerfile`) ![Docker Image Size (5.5.10-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-back/5.5.10-alpine)
+-   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/front/Dockerfile`) ![Docker Image Size (5.0.15-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-front/5.0.15-alpine)
+-   5.0.15-alpine 5.0-alpine 5.0.15 5.0  (`images/5.0/alpine/back/Dockerfile`) ![Docker Image Size (5.0.15-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-back/5.0.15-alpine)
+-   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/front/Dockerfile`) ![Docker Image Size (4.2.14-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-front/4.2.14-alpine)
+-   4.2.14-alpine 4.2-alpine 4.2.14 4.2  (`images/4.2/alpine/back/Dockerfile`) ![Docker Image Size (4.2.14-alpine)](https://img.shields.io/docker/image-size/monogramm/docker-taiga-back/4.2.14-alpine)
 
 <!-- <Docker Tags -->
 

@@ -52,16 +52,21 @@ for latest in "${latests[@]}"; do
     if version_greater_or_equal "$version" "$min_version"; then
 
         for variant in "${variants[@]}"; do
-            # Create the version+variant directory with a Dockerfile.
-            dir="images/$version/$variant"
-            if [ -d "$dir" ]; then
-                continue
-            fi
 
             for image in "${images[@]}"; do
-                echo "generating $image:$version-$variant"
+
+                # Add README repo
+                #readmeTags="$readmeTags\n\n> [${dockerRepo[$image]}](https://hub.docker.com/r/${dockerRepo[$image]}/)\n"
+
+                # Create the version+variant directory with a Dockerfile.
+                dir="images/$version/$variant"
                 src="template/$image"
                 tgt="$dir/$image"
+                if [ -d "$tgt" ]; then
+                    continue
+                fi
+
+                echo "generating $image:$version-$variant"
                 mkdir -p "$tgt"
 
                 template="Dockerfile.$image.template"
@@ -116,7 +121,7 @@ for latest in "${latests[@]}"; do
                 echo "${DOCKER_TAGS} " > "$tgt/.dockertags"
 
                 # Add README tags
-                readmeTags="$readmeTags\n-   ${DOCKER_TAGS} (\`$tgt/Dockerfile\`)"
+                readmeTags="$readmeTags\n-   ${DOCKER_TAGS} (\`$tgt/Dockerfile\`) ![Docker Image Size ($latest-$tagVariant)](https://img.shields.io/docker/image-size/${dockerRepo[$image]}/$latest-$tagVariant)"
 
                 if [[ $1 == 'build' ]]; then
                     tag="$version-$variant"
