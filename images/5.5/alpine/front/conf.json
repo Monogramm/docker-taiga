@@ -20,9 +20,6 @@
     "gitHubClientId": "",
     "gitLabClientId": "",
     "gitLabUrl": "https://gitlab.com",
-    "openidAuth": "",
-    "openidName": "",
-    "openidClientId": "",
     "tribeHost": null,
     "importers": [],
     "enableGithubImporter": false,
@@ -31,5 +28,9 @@
     "enableAsanaImporter": false,
     "gravatar": true,
     "rtlLanguages": ["ar", "fa", "he"],
-    "loginFormType": "normal"
+    "loginFormType": "normal",
+    "openidAuth": "",
+    "openidScope" : "",
+    "openidName": "",
+    "openidClientId": ""
 }

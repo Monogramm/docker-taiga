@@ -83,7 +83,7 @@ See [docker-taiga-front-base](https://github.com/Monogramm/docker-taiga-front-ba
 
 This image also provides healthchecks and additionnal configuration properties.
 
-#### TAIGA_GITLAB_AUTH_CLIENT_ID
+#### GITLAB_API_CLIENT_ID
 
 _Default value_: 
 
@@ -92,10 +92,10 @@ GitLab Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=gitlab-a
 Examples:
 
 ```yml
-TAIGA_GITLAB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
+GITLAB_API_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
 ```
 
-#### TAIGA_GITLAB_AUTH_URL
+#### GITLAB_URL
 
 _Default value_: `https://gitlab.com`
 
@@ -104,14 +104,14 @@ GitLab Authentication instance URL.
 Examples:
 
 ```yml
-TAIGA_GITLAB_AUTH_URL=https://gitlab.com
+GITLAB_URL=https://gitlab.com
 ```
 
 ```yml
-TAIGA_GITLAB_AUTH_URL=https://gitlab.company.com
+GITLAB_URL=https://gitlab.company.com
 ```
 
-#### TAIGA_GITHUB_AUTH_CLIENT_ID
+#### GITHUB_AUTH_CLIENT_ID
 
 _Default value_: 
 
@@ -120,10 +120,10 @@ GitHub Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=github-a
 Examples:
 
 ```yml
-TAIGA_GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
+GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
 ```
 
-#### TAIGA_OPENID_AUTH_CLIENT_ID
+#### OPENID_CLIENT_ID
 
 _Default value_: 
 
@@ -132,9 +132,9 @@ OpenID Authentication client ID. Remember to set `TAIGA_CONTRIB_PLUGINS=openid-a
 Examples:
 
 ```yml
-TAIGA_OPENID_AUTH_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
-TAIGA_OPENID_AUTH_NAME=Client_ID
-TAIGA_OPENID_AUTH_CLIENT_ID=Name_you_want_to_give_your_openid_provider_eg_keycloak
+OPENID_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
+OPENID_NAME=Name_you_want_to_give_your_openid_provider_eg_keycloak
+OPENID_CLIENT_ID=Client_ID
 ```
 
 ## Backend
@@ -155,7 +155,7 @@ See [docker-taiga-back-base](https://github.com/Monogramm/docker-taiga-back-base
 
 This image also provides healthchecks and additionnal configuration properties.
 
-#### TAIGA_ENABLE_SLACK
+#### ENABLE_SLACK
 
 _Default value_: `False`
 
@@ -164,11 +164,11 @@ Enable Taiga Slack plugin (also compatible with Mattermost). Remember to set `TA
 Examples:
 
 ```yml
-TAIGA_ENABLE_SLACK=False
-TAIGA_ENABLE_SLACK=True
+ENABLE_SLACK=False
+ENABLE_SLACK=True
 ```
 
-#### TAIGA_ENABLE_GITLAB_AUTH
+#### ENABLE_GITLAB_AUTH
 
 _Default value_: `False`
 
@@ -177,17 +177,17 @@ Enable Taiga GitLab Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=gitla
 Examples:
 
 ```yml
-TAIGA_ENABLE_GITLAB_AUTH=False
+ENABLE_GITLAB_AUTH=False
 ```
 
 ```yml
-TAIGA_ENABLE_GITLAB_AUTH=True
-TAIGA_GITLAB_AUTH_URL=https://gitlab.com
-TAIGA_GITLAB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
-TAIGA_GITLAB_AUTH_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITLAB_AUTH_XXXXXX
+ENABLE_GITLAB_AUTH=True
+GITLAB_URL=https://gitlab.com
+GITLAB_API_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITLAB_AUTH_XXXXXX
+GITLAB_API_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITLAB_AUTH_XXXXXX
 ```
 
-#### TAIGA_ENABLE_GITHUB_AUTH
+#### ENABLE_GITHUB_AUTH
 
 _Default value_: `False`
 
@@ -196,16 +196,16 @@ Enable Taiga GitHub Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=githu
 Examples:
 
 ```yml
-TAIGA_ENABLE_GITHUB_AUTH=False
+ENABLE_GITHUB_AUTH=False
 ```
 
 ```yml
-TAIGA_ENABLE_GITHUB_AUTH=True
-TAIGA_GITHUB_AUTH_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
-TAIGA_GITHUB_AUTH_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITHUB_AUTH_XXXXXX
+ENABLE_GITHUB_AUTH=True
+GITHUB_API_CLIENT_ID=XXXXXX_get_a_valid_client_id_from_GITHUB_AUTH_XXXXXX
+GITHUB_API_CLIENT_SECRET=XXXXXX_get_a_valid_client_secret_from_GITHUB_AUTH_XXXXXX
 ```
 
-#### TAIGA_ENABLE_LDAP
+#### ENABLE_LDAP
 
 _Default value_: `False`
 
@@ -214,46 +214,46 @@ Enable Taiga LDAP Authentication. Remember to set `TAIGA_LOGIN_FORM_TYPE=ldap` i
 Examples:
 
 ```yml
-TAIGA_ENABLE_LDAP=False
+ENABLE_LDAP=False
 ```
 
 ```yml
-TAIGA_ENABLE_LDAP=True
+ENABLE_LDAP=True
 # LDAP over STARTTLS
-TAIGA_LDAP_USE_TLS=True
-TAIGA_LDAP_SERVER=ldap.company.com
-TAIGA_LDAP_PORT=389
+LDAP_START_TLS=True
+LDAP_SERVER=ldap.company.com
+LDAP_PORT=389
 # LDAP bind and lookup properties
-TAIGA_LDAP_BIND_DN=cn=admin,dc=ldap,dc=company,dc=com
-TAIGA_LDAP_BIND_PASSWORD=somethingreallysecure
-TAIGA_LDAP_BASE_DN=ou=People,dc=ldap,dc=company,dc=com
-TAIGA_LDAP_USERNAME_ATTRIBUTE=uid
-TAIGA_LDAP_EMAIL_ATTRIBUTE=mail
-TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
+LDAP_BIND_DN=cn=admin,dc=ldap,dc=company,dc=com
+LDAP_BIND_PASSWORD=somethingreallysecure
+LDAP_SEARCH_BASE=ou=People,dc=ldap,dc=company,dc=com
+LDAP_USERNAME_ATTRIBUTE=uid
+LDAP_EMAIL_ATTRIBUTE=mail
+LDAP_FULL_NAME_ATTRIBUTE=cn
 # Fallback to local users if login not found in LDAP (default behavior)
-TAIGA_LDAP_FALLBACK=normal
+LDAP_FALLBACK=normal
 ```
 
 ```yml
-TAIGA_ENABLE_LDAP=True
+ENABLE_LDAP=True
 # LDAP over SSL
-TAIGA_LDAP_USE_TLS=False
-TAIGA_LDAP_SERVER=ldaps://ldap.company.com
-TAIGA_LDAP_PORT=636
+LDAP_START_TLS=False
+LDAP_SERVER=ldaps://ldap.company.com
+LDAP_PORT=636
 # LDAP bind and lookup properties
-TAIGA_LDAP_BIND_DN=cn=admin,dc=ldap,dc=company,dc=com
-TAIGA_LDAP_BIND_PASSWORD=somethingreallysecure
-TAIGA_LDAP_BASE_DN=ou=People,dc=ldap,dc=company,dc=com
-TAIGA_LDAP_USERNAME_ATTRIBUTE=uid
-TAIGA_LDAP_EMAIL_ATTRIBUTE=mail
+LDAP_BIND_DN=cn=admin,dc=ldap,dc=company,dc=com
+LDAP_BIND_PASSWORD=somethingreallysecure
+LDAP_SEARCH_BASE=ou=People,dc=ldap,dc=company,dc=com
+LDAP_USERNAME_ATTRIBUTE=uid
+LDAP_EMAIL_ATTRIBUTE=mail
 TAIGA_LDAP_FULL_NAME_ATTRIBUTE=cn
 # Disable passwords saved in DB on LDAP login
-TAIGA_LDAP_SAVE_LOGIN_PASSWORD=False
+LDAP_SAVE_LOGIN_PASSWORD=False
 # No fallback to local users (ie LDAP only)
-TAIGA_LDAP_FALLBACK=
+LDAP_FALLBACK=
 ```
 
-#### TAIGA_ENABLE_OPENID_AUTH
+#### ENABLE_OPENID
 
 _Default value_: `False`
 
@@ -262,15 +262,16 @@ Enable Taiga OpenID Authentication. Remember to set `TAIGA_CONTRIB_PLUGINS=openi
 Examples:
 
 ```yml
-TAIGA_ENABLE_OPENID_AUTH=False
+ENABLE_OPENID=False
 ```
 
 ```yml
-TAIGA_ENABLE_OPENID_AUTH=True
-TAIGA_OPENID_AUTH_USER_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
-TAIGA_OPENID_AUTH_TOKEN_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/token
-TAIGA_OPENID_AUTH_CLIENT_ID=Client_ID
-TAIGA_OPENID_AUTH_CLIENT_SECRET=Client_SECRET
+ENABLE_OPENID=True
+OPENID_USER_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/auth
+OPENID_TOKEN_URL=https://{url-to-keycloak}/auth/realms/{realm}/protocol/openid-connect/token
+OPENID_CLIENT_ID=Client_ID
+OPENID_CLIENT_SECRET=Client_SECRET
+OPENID_SCOPE=openid email
 ```
 
 [uri_license]: http://www.gnu.org/licenses/agpl.html

@@ -4,10 +4,14 @@ LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
 ENV TAIGA_ENABLE_GITLAB_AUTH=False \
-    TAIGA_GITLAB_AUTH_CLIENT_ID= \
-    TAIGA_GITLAB_AUTH_URL=https://gitlab.com \
-    TAIGA_ENABLE_GITHUB_AUTH=False \
-    TAIGA_GITHUB_AUTH_CLIENT_ID=
+    GITLAB_API_CLIENT_ID= \
+    GITLAB_URL=https://gitlab.com \
+    ENABLE_GITHUB_AUTH=False \
+    GITHUB_AUTH_CLIENT_ID= \
+    ENABLE_OPENID=False \
+    OPENID_URL= \
+    OPENID_NAME= \
+    OPENID_CLIENT_ID=
 
 # Add custom init script to original entrypoint and custom conf
 COPY custom_init.sh /
