@@ -387,6 +387,7 @@ services:
       - DOCKER_WEB_CONTAINER=taiga_front
       - DOCKER_WEB_PORT=80
       - DOCKER_WEB_HEALTH_API=conf.json
+      - DOCKER_WEB_HEALTH_API_RESULT=gitlab-auth.json
     volumes_from:
       - taiga_front
       - taiga_back

@@ -51,7 +51,17 @@ for latest in "${latests[@]}"; do
     # Only add versions >= "$min_version"
     if version_greater_or_equal "$version" "$min_version"; then
 
+        if ! [ -d "images/$version" ]; then
+            # Add GitHub Actions env var
+            githubEnv="'$version', $githubEnv"
+        fi
+
         for variant in "${variants[@]}"; do
+
+            if ! [ -d "images/$version/$variant" ]; then
+                # Add Travis-CI env var
+                travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
+            fi
 
             for image in "${images[@]}"; do
 
@@ -138,12 +148,6 @@ for latest in "${latests[@]}"; do
                 s/%%VARIANT%%/'"$variant"'/g;
                 s/%%VERSION%%/'"$version"'/g;
             ' "$dir/docker-compose.yml"
-
-            # Add GitHub Actions env var
-            githubEnv="'$version', $githubEnv"
-
-            # Add Travis-CI env var
-            travisEnv='\n    - VERSION='"$version"' VARIANT='"$variant$travisEnv"
 
         done
 

@@ -45,7 +45,8 @@ if [ -n "${DOCKER_WEB_CONTAINER}" ]; then
 
     DOCKER_WEB_CONTAINER_HEALTH_URL=http://${DOCKER_WEB_CONTAINER}:${DOCKER_WEB_PORT:-80}/${DOCKER_WEB_HEALTH_API:-api/v1/}
     log "Checking API: ${DOCKER_WEB_CONTAINER_HEALTH_URL}"
-    curl --fail "${DOCKER_WEB_CONTAINER_HEALTH_URL}" | grep -q -e '"auth":' || exit 1
+    curl "${DOCKER_WEB_CONTAINER_HEALTH_URL}"
+    curl --fail "${DOCKER_WEB_CONTAINER_HEALTH_URL}" | grep -q -e "${DOCKER_WEB_HEALTH_API_RESULT:-auth}" || exit 1
 fi
 
 

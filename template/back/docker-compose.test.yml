@@ -388,6 +388,7 @@ services:
       #- DOCKER_WEB_CONTAINER=taiga_back
       #- DOCKER_WEB_PORT=8001
       #- DOCKER_WEB_HEALTH_API=api/v1/
+      #- DOCKER_WEB_HEALTH_API_RESULT=auth
     volumes_from:
       - taiga_front
       - taiga_back
