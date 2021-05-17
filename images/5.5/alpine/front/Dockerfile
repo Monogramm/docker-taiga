@@ -3,7 +3,7 @@ FROM monogramm/docker-taiga-front-base:5.5-alpine
 LABEL maintainer="Monogramm maintainers <opensource at monogramm dot io>"
 
 # Taiga additional properties
-ENV TAIGA_ENABLE_GITLAB_AUTH=False \
+ENV ENABLE_GITLAB_AUTH=False \
     GITLAB_API_CLIENT_ID= \
     GITLAB_URL=https://gitlab.com \
     ENABLE_GITHUB_AUTH=False \
