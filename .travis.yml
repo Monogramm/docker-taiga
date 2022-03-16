@@ -64,7 +64,9 @@ notifications:
   email: false
 
 env: # Environments
-    - VERSION=4.2 VARIANT=alpine
-    - VERSION=5.0 VARIANT=alpine
-    - VERSION=5.5 VARIANT=alpine
     - VERSION=6.0 VARIANT=alpine
+    - VERSION=6.1 VARIANT=alpine
+    - VERSION=6.2 VARIANT=alpine
+    - VERSION=6.3 VARIANT=alpine
+    - VERSION=6.4 VARIANT=alpine
+    - VERSION=6.5 VARIANT=alpine

@@ -21,8 +21,8 @@ variants=(
     alpine
 )
 
-min_version='4.2'
-dockerLatest='6.0'
+min_version='6.0'
+dockerLatest='6.5'
 dockerDefaultVariant='alpine'
 
 
@@ -31,7 +31,7 @@ function version_greater_or_equal() {
     [[ "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || "$1" == "$2" ]];
 }
 
-latests=( $( curl -fsSL 'https://api.github.com/repos/taigaio/taiga-front-dist/tags' |tac|tac| \
+latests=( $( curl -fsSL 'https://api.github.com/repos/kaleidos-ventures/taiga-front-dist/tags' |tac|tac| \
     grep -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+' | \
     sort -urV )
     4.2.14 )
